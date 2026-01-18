@@ -1,0 +1,133 @@
+/* Inset class start */
+.tw-start {
+    &-0 {
+        inset-inline-start: 0;
+    }
+    &-20 {
+        inset-inline-start: 20%;
+    }
+    &-50 {
+        inset-inline-start: 50%;
+    }
+    &-100 {
+        inset-inline-start: 100%;
+    }
+    &-24-px {
+        inset-inline-start: 24px;
+    }
+    &-100-px {
+        inset-inline-start: 100px;
+    }
+    &-82 {
+        inset-inline-start: 82%;
+    }
+    &-58 {
+        inset-inline-start: 58%;
+    }
+    &-auto {
+        inset-inline-start: auto;
+    }
+}
+.tw-end {
+    &-0 {
+        inset-inline-end: 0;
+    }
+    &-1 {
+        inset-inline-end: 1%;
+    }
+    &-27 {
+        inset-inline-end: 27%;
+    }
+    &-8 {
+        inset-inline-end: 8%;
+    }
+    &-100 {
+        inset-inline-end: 100%;
+    }
+    &-50 {
+        inset-inline-end: 50%;
+    }
+    &-100-px {
+        inset-inline-end: 100px;
+    }
+    &-22-px {
+        inset-inline-end: 22px;
+    }
+    &-6-px {
+        inset-inline-end: 6px;
+    }
+    &-60-px {
+        inset-inline-end: 60px;
+    }
+    &-23 {
+        inset-inline-end: 23%;
+    }
+    &--110-px {
+        inset-inline-end: -110px;
+    }
+    &-auto {
+        inset-inline-end: auto;
+    }
+}
+.tw-block-start {
+    &-0 {
+        inset-block-start: 0;
+    }
+    &-22 {
+        inset-block-start: 22%;
+    }
+    &--9 {
+        inset-block-start: -9%;
+    }
+    &-50 {
+        inset-block-start: 50%;
+    }
+    &-22-px {
+        inset-block-start: 22px;
+    }
+    &-24-px {
+        inset-block-start: 24px;
+    }
+    &-48-px {
+        inset-block-start: 48px;
+    }
+    &-130-px {
+        inset-block-start: 130px;
+    }
+    &-200-px {
+        inset-block-start: 200px;
+    }
+    &-22-px {
+        inset-block-start: 22px;
+    }
+    &-100-px {
+        inset-block-start: 100px;
+    }
+}
+.tw-block-end {
+    &-0 {
+        inset-block-end: 0;
+    }
+    &--9 {
+        inset-block-end: -9%;
+    }
+    &-6 {
+        inset-block-end: 6%;
+    }
+    &-174-px {
+        inset-block-end: 174px;
+    }
+    &-75-px {
+        inset-block-end: 75px;
+    }
+    &-80-px {
+        inset-block-end: 80px;
+    }
+}
+.tw-rotate--7deg {
+    rotate: -7deg;
+}
+
+
+
+/* Inset class End */

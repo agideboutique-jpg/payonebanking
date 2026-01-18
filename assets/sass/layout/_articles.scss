@@ -1,0 +1,87 @@
+.articles-link::before {
+    position: absolute;
+    content: "";
+    width: 138px;
+    height: 51px;
+    z-index: -1;
+    top: 3px;
+    left: 3px;
+    background: #104042;
+    border-radius: 10px;
+    transition: .4s;
+}
+.articles-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 138px;
+        height: 51px;
+        z-index: -1;
+        top: -4px;
+        left: -3px;
+        background: #104042;
+        border-radius: 10px;
+    }
+}
+.articles-view-link::before {
+    position: absolute;
+    content: "";
+    width: 156px;
+    height: 47px;
+    z-index: -1;
+    top: 5px;
+    left: 3px;
+    background-color: #104042;
+    border-radius: 10px;
+    transition: 0.4s;
+}
+.articles-view-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 156px;
+        height: 47px;
+        z-index: -1;
+        top: -4px;
+        left: -3px;
+        background-color: #104042;
+        border-radius: 10px;
+        transition: 0.4s;
+    }
+}
+.articles-img {
+    @media (max-width: 1399px) {
+        max-width: 45%;
+        width: 100%;
+    }
+    @media (max-width: 768px) {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+.articles-text {
+    @media (max-width: 1399px) {
+        max-width: 45%;
+        width: 100%;
+    }
+    @media (max-width: 768px) {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+/*======================= articles two css start =========================*/ 
+.articles-bank-card {
+    @media (max-width: 1399px) {
+        max-width: 300px;
+    }
+    @media (max-width: 1199px) {
+        max-width: 262px;
+    }
+    @media (max-width: 768px) {
+        max-width: 390px;
+    }
+    @media (max-width: 400px) {
+        max-width: 270px;
+    }
+}
+/*======================= articles two css end =========================*/ 

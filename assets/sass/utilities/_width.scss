@@ -1,0 +1,92 @@
+/* width Css Class start */
+@each $property, $value in $spaces {
+  .tw-w-#{$property} {
+    width: $value;
+  }
+}
+
+.min-w-max {
+  min-width: max-content;
+}
+
+.tw-w {
+  &-px {
+    width: 1px;
+  }
+  &-360-px {
+    width: 360px !important;
+  }
+  &-306-px {
+    width: 306px !important;
+  }
+  &-200-px {
+    width: 200px !important;
+  }
+  &-232-px {
+    width: 232px !important;
+  }
+  &-1662-px {
+    width: 1662px !important;
+  }
+  &-406-px {
+    width: 406px;
+  }
+  &-250-px {
+    width: 250px;
+  }
+  &-76-px {
+    width: 76px;
+  }
+  &-100-px {
+    width: 100px;
+  }
+  &-100vw {
+    width: 100vw;
+  }
+  &-526-px {
+    width: 526px;
+  }
+  &-72-px {
+    width: 72px;
+  }
+  &-86-px {
+    width: 86px;
+  }
+  &-80-px {
+    width: 80px;
+  }
+  &-300-px {
+    width: 300px;
+  }
+  &-100-px {
+    width: 100px;
+  }
+  &-w-max {
+    width: max-content;
+  }
+}
+.tw-w-222px {
+  width: 222px;
+}
+.tw-w-193px {
+  width: 193px;
+}
+.tw-w-140px {
+  width: 140px;
+}
+.tw-w-100px {
+  width: 100px;
+}
+.tw-w-84px {
+  width: 84px;
+}
+.tw-w-82px {
+  width: 82px;
+}
+.tw-w-72px {
+  width: 72px;
+}
+.tw-w-70px {
+  width: 70px;
+}
+/* width Css Class End */

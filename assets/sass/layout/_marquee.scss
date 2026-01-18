@@ -1,0 +1,66 @@
+/* Portfolio 2 End ---------------------------------- */
+/*------------------- 4.00. Marquee -------------------*/
+/* Marquee 1---------------------------------- */
+.marquee-area {
+  padding: 25px 0;
+}
+
+.slider__marquee {
+  overflow: hidden;
+  margin: 0;
+  margin-bottom: 0;
+}
+
+.slider__marquee .item {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-margin-end: 40px;
+          margin-inline-end: 40px;
+}
+
+.slider__marquee .item a {
+  font-family: var(--body-color);
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 55px;
+  color: var(--title-color);
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.slider__marquee .item a img {
+  -webkit-margin-end: 37px;
+          margin-inline-end: 37px;
+}
+
+.slider__marquee .item a span {
+  display: inline-block;
+  line-height: 1;
+}
+
+.slider__marquee .item a span.text-stroke {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px var(--title-color);
+}
+
+/* Marquee 2---------------------------------- */
+// .slider__marquee.style2 .item a {
+//   color: var(--white-color);
+// }
+
+// .slider__marquee.style2 .item a span.text-stroke {
+//   -webkit-text-stroke: 1px var(--white-color);
+// }
+
+// .slider__marquee.style2 .item a img {
+//   -webkit-filter: brightness(9) grayscale(9);
+//           filter: brightness(9) grayscale(9);
+// }

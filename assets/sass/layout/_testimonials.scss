@@ -1,0 +1,25 @@
+/*================ testimonial css start ==================*/ 
+.testimonial-slider {
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+  .swiper-slide {
+    width: auto;
+    flex-shrink: 0;
+    width: calc((100% - 20px) / 2); /* 2 slides with 20px spaceBetween */
+  }
+
+
+  
+  /*================ testimonial two css start ==================*/ 
+.testimonial-two-slider {
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+  .swiper-slide {
+    width: auto;
+    flex-shrink: 0;
+    width: calc((100% - 20px) / 2); /* 2 slides with 20px spaceBetween */
+  }

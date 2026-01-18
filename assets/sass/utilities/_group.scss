@@ -1,0 +1,111 @@
+/* ======================== Group Css Start =============================== */
+.group {
+    &:hover {
+        .group-hover-text {
+            &-white {
+                color: hsl(var(--white)) !important;
+            }
+            &-main-600 {
+                color: var(--main-600) !important;
+            }
+            &-dark-600 {
+                color: var(--dark-600) !important;
+            }
+            &-base-two-600 {
+                color: var(--base-two-600) !important;
+            }
+        }
+        .group-hover-bg {
+            &-white {
+                background-color: hsl(var(--white)) !important;
+            }
+            &-main-600 {
+                background-color: var(--main-600) !important;
+            }
+            &-base-two-600 {
+                background-color: var(--base-two-600) !important;
+            }
+            &-neutral-200 {
+                background-color: #F5F9FC1A !important;
+            }
+            &-neutral-30 {
+                background-color: var(--neutral-30) !important;
+            }
+            &-neutral-10 {
+                background-color: var(--neutral-10) !important;
+            }
+        }
+        .group-hover-border {
+            &-white {
+                border: hsl(var(--white)) !important;
+            }
+            &-main-600 {
+                border: var(--main-600) !important;
+            }
+            &-dark-600 {
+                border-bottom: 3px solid #121212 !important;
+            }
+            &-base-two-600 {
+                border-bottom: 2px solid #104042 !important;
+            }
+        }
+    }
+    &-hover-text-transition {
+        transition: inherit;
+    }
+}
+
+.tw-invisible {
+    visibility: hidden;
+}
+.tw-opacity-0 {
+    opacity: 0;
+}
+.tw-visible {
+    visibility: visible;
+}
+.tw-opacity-1 {
+    opacity: 1;
+}
+
+.group-item  {
+    &:hover {
+        .group-hover-item-hiddem {
+            visibility: hidden;
+        }
+        .group-hover-item-opacity-0 {
+            opacity: 0 !important;
+        }
+        .group-hover-item-visible {
+            visibility: visible;
+        }
+        .group-hover-item-opacity-1 {
+            opacity: 1 !important;
+        }
+        .group-hover-item-mt-0 {
+            margin-top: 0;
+        }
+        .group-hover-item-scale-12 {
+            transform: scale(1.2);
+        }
+        .group-hover-item-scale-1 {
+            transform: scale(1);
+        }
+        .group-hover-item-translate-x-0 {
+            transform: translateX(0);
+        }
+        .group-hover-item-d-block {
+            display: block !important;
+        }
+        .group-hover-item-d-none {
+            display: none !important;
+        }
+        .group-hover-item-text-invert {
+            filter: brightness(0) invert(1);
+        }
+        .group-hover-item-text-invert-black {
+            filter: brightness(0) invert(0);
+        }
+    }
+}
+/* ======================== Group Css End =============================== */

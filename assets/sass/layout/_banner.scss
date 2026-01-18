@@ -1,0 +1,369 @@
+/*================banner css section start=====================*/ 
+.play-button::before{
+    position: absolute;
+    content: "";
+    width: inherit;
+    height: inherit;
+    background: #FFFFFF4D;
+    border-radius: 50%;
+    z-index: -1;
+    -webkit-animation: animate 2.3s ease-out infinite;
+    animation: animate 2.3s ease-out infinite;
+}
+
+
+.banner-item-title{
+    @media (max-width: 1201px) {
+        font-size: 50px;
+    }
+    @media (max-width: 469px) {
+        font-size: 42px;
+    }
+}
+.banner-item-text{
+    @media (max-width: 530px) {
+        font-size: 16px;
+    }
+}
+.banner-shape-one{
+    @media (max-width: 1201px) {
+        inset-inline-end: -14px;
+        inset-block-start: 52px;
+    }
+    @media (max-width: 1199px) {
+        inset-inline-end: -24px;
+        inset-block-start: 52px;
+        max-width: 350px;
+    }
+}
+
+.banner-item-link::before{
+    position: absolute;
+    content: '';
+    background-color: #FFD200;
+    top: 8px;
+    left: 4px;
+    width: 247px;
+    height: 50px;
+    z-index: -1;
+    border-radius: 12px;
+    transition: .4s;
+}
+.banner-item-link:hover {
+    &::before{
+        position: absolute;
+        content: '';
+        background-color: #FFD200;
+        top: -7px;
+        left: -4px;
+        width: 247px;
+        height: 52px;
+        z-index: -1;
+        border-radius: 12px;
+    }
+}
+
+.banner-shape-five{
+    @media (max-width: 1552px) {
+        inset-inline-end: -65px;
+    } 
+    @media (max-width: 1252px) {
+        inset-inline-end: -45px;
+    } 
+    @media (max-width: 1070px) {
+        inset-inline-end: -45px;
+    } 
+}
+.arrow-shape-one {
+    
+    @media (max-width: 401px) {
+        inset-inline-start: 27%;
+    } 
+}
+
+.banner-item{
+    @media (max-width: 992px) {
+        display: none;
+    }
+}
+
+.banner-shape-two{
+    @media (max-width: 1550px) {
+        inset-inline-end: -70px;
+    }
+    @media (max-width: 1272px) {
+        inset-inline-end: -40px;
+    }
+}
+.banner-slider{
+    @media (max-width: 992px) {
+        margin-top: 94px;
+    }
+}
+.banner-brand-item {
+    @media (max-width:  992px){
+        margin-top: 0;
+    }
+}
+
+/*==================== banner two css start =======================*/
+.banner-two-title {
+    @media (max-width: 1399px) {
+        font-size: 60px;
+    }
+    @media (max-width: 1199px) {
+        font-size: 50px;
+    }
+    @media (max-width: 768px) {
+        font-size: 45px;
+    }
+    @media (max-width: 491px) {
+        font-size: 42px;
+    }
+    @media (max-width: 491px) {
+        font-size: 40px;
+    }
+    @media (max-width: 446px) {
+        font-size: 30px;
+    }
+    @media (max-width: 337px) {
+        font-size: 26px;
+    }
+} 
+.banner-two-link::before {
+    position: absolute;
+    content: "";
+    width: 281px;
+    height: 52px;
+    background: #FFD200;
+    z-index: -1;
+    top: 6px;
+    left: 7px;
+    border-radius: .5rem;
+    transition: .4s;
+}
+.banner-two-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 281px;
+        height: 52px;
+        background: #FFD200;
+        z-index: -1;
+        top: -6px;
+        left: -5px;
+        border-radius: .5rem;
+    }
+}
+.banner-two-shape-one {
+    @media (max-width: 1399px) {
+        inset-block-start: 72px;
+        inset-inline-start: 349px;
+    }
+    @media (max-width: 1199px) {
+        inset-block-start: 58px;
+        inset-inline-start: 294px;
+        max-width: 250px;
+    }
+}
+.banner-two-shape-three {
+    @media (max-width: 452px) {
+        inset-inline-start: 20%;        
+    }
+}
+.banner-two-button::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #0D042C;
+    border-radius: .5rem;
+    top: 6px;
+    left: 4px;
+    z-index: -1;
+    transition: .4s;
+}
+.banner-two-button:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: #0D042C;
+        border-radius: .5rem;
+        top: -6px;
+        left: -4px;
+        z-index: -1;
+    }
+}
+.banner-two-card::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    top: 8px;
+    left: 8px;
+    background: #FFD200;
+    border-radius: .5rem;
+    transition: .4s;
+}
+.banner-two-card:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        top: -8px;
+        left: -8px;
+        background: #FFD200;
+        border-radius: .5rem;
+    }
+}
+/*==================== banner two css end =======================*/ 
+
+
+/*================banner three css section start=====================*/ 
+.banner-three-item-link::before {
+    position: absolute;
+    content: "";
+    width: 159px;
+    height: 55px;
+    z-index: -1;
+    background-color: #104042;
+    border-radius: .5rem;
+    top: 3px;
+    left: 3px;
+    transition: .4s;
+}
+.banner-three-item-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 159px;
+        height: 55px;
+        z-index: -1;
+        background-color: #104042;
+        border-radius: .5rem;
+        top: -3px;
+        left: -3px;
+    }
+}
+.banner-three-item-2-link::before {
+    position: absolute;
+    content: "";
+    width: 131px;
+    height: 55px;
+    z-index: -1;
+    background-color: #104042;
+    border-radius: .5rem;
+    top: 3px;
+    left: 3px;
+    transition: .4s;
+}
+.banner-three-item-2-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 131px;
+        height: 55px;
+        z-index: -1;
+        background-color: #104042;
+        border-radius: .5rem;
+        top: -3px;
+        left: -3px;
+    }
+}
+.banner-three-item {
+    @media (max-width: 1628px) {
+        margin-left: 150px;
+    }
+    @media (max-width: 1430px) {
+        margin-left: 90px;
+    }
+    @media (max-width: 1199px) {
+        margin-left: 0px;
+    }
+}
+.banner-shape-three-one {
+    @media (max-width: 1367px) {
+        inset-block-start: 202px;
+        inset-inline-start: 0%;
+    }
+    @media (max-width: 1201px) {
+        inset-block-start: 108px;
+        inset-inline-start: 57%;
+    }
+    @media (max-width: 1199px) {
+        inset-block-start: 108px;
+        inset-inline-start: 18%;
+    }
+}
+/*================banner three css section end=====================*/ 
+
+
+
+/*=================== banner four css section start ==================*/
+.banner-four-link::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: #104042;
+    border-radius: 8px;
+    top: 3px;
+    left: 3px;
+    z-index: -1;
+    transition: .4s;
+}
+.banner-four-link:hover {
+    &::before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        background-color: #104042;
+        border-radius: 8px;
+        top: -3px;
+        left: -3px;
+        z-index: -1;
+    }
+}
+.banner-four-clip-path{
+    clip-path: polygon(0 54%, 100% 0, 100% 100%, 0% 100%);
+}
+.banner-four-clip-path{
+    @media (max-width: 1540px) {
+        margin-top: -280px;
+    }
+    @media (max-width: 1440px) {
+        margin-top: -135px;
+        height: 374px;
+    }
+    @media (max-width: 1350px) {
+        margin-top: -114px;
+        height: 374px;
+    }
+    @media (max-width: 768px) {
+        margin-top: -77px;
+        height: 280px;
+    }
+    @media (max-width: 524px) {
+        margin-top: -30px;
+        height: 280px;
+    }
+}
+
+.banner-four__text {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    @media (max-width: 992px) {
+        grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 530px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*=================== banner four css section end ==================*/ 

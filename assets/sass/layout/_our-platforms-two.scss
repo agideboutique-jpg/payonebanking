@@ -1,0 +1,36 @@
+.nav-link {
+    color: #121212;
+    background: #F5F9FC !important;
+    &:hover{
+        color: #121212;
+    }
+}
+.nav-pills .nav-link {
+    border-radius: 14px;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #104042 !important;
+    color: #fff !important;
+}
+.platform-two-item {
+    @media (max-width: 1399px) {
+        margin-left: 0px;
+    }
+    @media (max-width: 992px) {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+.platform-tabs {
+    @media (max-width: 992px) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+.platform-item {
+    @media (max-width: 399px) {
+        margin-block-end: 20px;
+        margin-inline-start: 20px;
+        max-width: 350px;
+    }
+}

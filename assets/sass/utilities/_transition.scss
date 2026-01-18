@@ -1,0 +1,24 @@
+/* transition Css Class start */
+.tw-transition {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    &-all {
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+    }
+}
+.tw-transition-03-secend {
+    transition: 0.3s;
+}
+.tw-transition-04-secend {
+    transition: 0.4s;
+}
+.tw-transition-05-secend {
+    transition: 0.5s;
+}
+.tw-transition-06-secend {
+    transition: 0.6s;
+}
+
+/* transition Css Class End */

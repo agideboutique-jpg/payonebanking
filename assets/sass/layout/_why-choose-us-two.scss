@@ -1,0 +1,36 @@
+.choose-us-two-card {
+    @media (max-width: 1199px) {
+        margin-block-start: 50px;
+    }
+    @media (max-width: 768px) {
+        margin-block-start: 0;
+    }
+}
+
+/* ======================= why choose us three css start =========================== */
+.choose-us-three-link::after {
+    position: absolute;
+    content: "";
+    width: 185px;
+    height: 50px;
+    top: 3px;
+    left: 2px;
+    z-index: -1;
+    background: #104042;
+    border-radius: 0.5rem;
+    transition: 0.4s;
+} 
+.choose-us-three-link:hover {
+    &::after {
+        position: absolute;
+        content: "";
+        width: 185px;
+        height: 50px;
+        top: -3px;
+        left: -3px;
+        z-index: -1;
+        background: #104042;
+        border-radius: 0.5rem;
+    } 
+}
+/* ======================= why choose us three css end =========================== */ 

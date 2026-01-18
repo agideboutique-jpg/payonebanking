@@ -1,0 +1,25 @@
+.team-members-link::before {
+    position: absolute;
+    content: "";
+    width: 143px;
+    height: 48px;
+    background-color: #104042;
+    top: 4px;
+    left: 2px;
+    z-index: -1;
+    border-radius: 12px;
+    transition: .4s;
+}
+.team-members-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 143px;
+        height: 48px;
+        background-color: #104042;
+        top: -3px;
+        left: -3px;
+        z-index: -1;
+        border-radius: 12px;
+    }
+}

@@ -1,0 +1,66 @@
+.our-feature__card-one::before {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    box-shadow: 0 -16px 0px #ffffff;
+    border-radius: 50%;
+    transform: rotate(-36deg);
+    top: -1px;
+    inset-inline-start: 232px;
+}
+.our-feature__card-one::after {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    box-shadow: 0 -16px 0px #ffffff;
+    border-radius: 50%;
+        transform: rotate(-49deg);
+    top: 117px;
+    inset-inline-start: -1px;
+}
+.our-feature__card-two::before {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    box-shadow: 0 -16px 0px #ffffff;
+    border-radius: 50%;
+    transform: rotate(140deg);
+    bottom: 148px;
+    inset-inline-end: 1px;
+}
+.our-feature__card-two::after {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    box-shadow: 0 -16px 0px #ffffff;
+    border-radius: 50%;
+    transform: rotate(148deg);
+    bottom: -1px;
+    inset-inline-end: 200px;
+}
+.our-peature__item {
+    @media (max-width: 1199px) {
+        max-width: 100%;
+    }
+    @media (max-width: 992px) {
+        max-width: 442px;
+    }
+    @media (max-width: 768px) {
+        max-width: 310px;
+    }
+    @media (max-width: 532px) {
+        max-width: 242px;
+    }
+}
+.feature-card {
+    @media (max-width: 768px) {
+        gap: 20px;
+    }
+    @media (max-width: 532px) {
+        gap: 14px;
+    }
+}

@@ -1,0 +1,124 @@
+/*================= Psylox One Css Start======================*/ 
+.paynone-title {
+    @media (max-width: 1499px) {
+        font-size: 60px;
+    }
+    @media (max-width: 1024px) {
+        font-size: 48px;
+    }
+    @media (max-width: 445px) {
+        font-size: 34px;
+    }
+}
+
+.paynone-item {
+    @media (max-width: 1199px) {
+        margin-bottom: 40px;
+    }
+}
+
+
+.paynone-card-one {
+    @media (max-width: 1200px ) {
+        margin-block-start: 0px;
+    }
+    @media (max-width: 992px ) {
+       max-width: 100%;
+       height: 100%;
+    }
+}
+.paynone-card-two {
+    @media (max-width: 1199px ) {
+        margin-inline-start: 0;
+        margin-block-start: 0;
+    }
+    @media (max-width: 992px ) {
+       max-width: 100%;
+       height: 100%;
+    }
+}
+.paynone-card-three {
+    @media (max-width: 1399px ) {
+        margin-inline-start: 50px;
+    }
+    @media (max-width: 1199px ) {
+        margin-block-start: 0;
+        margin-inline-start: 0;
+    }
+    @media (max-width: 992px ) {
+       max-width: 100%;
+       height: 100%;
+    }
+}
+.paynone-card-four {
+    @media (max-width: 1199px ) {
+        margin-block-start: 0;
+    }
+    @media (max-width: 992px ) {
+       max-width: 100%;
+       height: 100%;
+    }
+}
+.paynone-card-five {
+    @media (max-width: 1399px ) {
+        margin-inline-start: 45px;
+    }
+    @media (max-width: 1399px ) {
+        margin-inline-start: 0;
+        margin-block-start: 0;
+    }
+    @media (max-width: 992px ) {
+       max-width: 100%;
+       height: 100%;
+    }
+}
+.paynone-card-six {
+    @media (max-width: 1399px ) {
+        margin-inline-start: 45px;
+    }
+    @media (max-width: 1199px ) {
+        margin-inline-start: 0;
+        margin-block-start: 0;
+    }
+    @media (max-width: 992px ) {
+       max-width: 100%;
+       height: 100%;
+    }
+}
+.payone-card {
+   @media (max-width: 1199px) {
+        width: 100%;
+        height: 100%;
+    }
+}
+/*================= Psylox One Css End======================*/ 
+
+
+
+/*================= Psylox Two Css Start ======================*/
+.payone-two-link::before {
+    position: absolute;
+    content: "";
+    width: 143px;
+    height: 48px;
+    background-color: #104042;
+    z-index: -1;
+    top: 5px;
+    left: 4px;
+    border-radius: 0.5rem;
+    transition: .4s;
+} 
+.payone-two-link:hover {
+   &::before {
+    position: absolute;
+    content: "";
+    width: 143px;
+    height: 48px;
+    background-color: #104042;
+    z-index: -1;
+    top: -5px;
+    left: -3px;
+    border-radius: 0.5rem;
+    }  
+}
+/*================= Psylox Two Css End ======================*/ 

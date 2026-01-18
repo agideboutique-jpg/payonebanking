@@ -1,0 +1,122 @@
+// border
+@each $color, $shades in $colors {
+    @each $shade, $value in $shades {
+      .border-#{$color}-#{$shade} {
+        border-color: var(--#{$color}-#{$shade}) !important;
+      }
+    }
+}
+
+// hover border
+@each $color, $shades in $colors {
+    @each $shade, $value in $shades {
+      .hover-border-#{$color}-#{$shade} {
+        &:hover {
+            border-color: var(--#{$color}-#{$shade}) !important;
+        }
+      }
+    }
+  }
+
+// focus border
+@each $color, $shades in $colors {
+    @each $shade, $value in $shades {
+      .focus-border-#{$color}-#{$shade} {
+        &:focus {
+            border-color: var(--#{$color}-#{$shade}) !important;
+        }
+      }
+    }
+  }
+
+  .tw-border {
+    &-dashed {
+      border-style: dashed !important;
+    }
+  }
+
+
+.tw-border-base-two-600-dashed {
+  border: 1px dashed #104042;
+}
+.tw-hover-border-bottom-base-two-600:hover {
+  border-bottom: 3px solid #104042;
+}
+.tw-hover-border-black:hover {
+  border: 2px solid #000000;
+}
+.tw-transition-05-secend {
+  transition: .5s !important;
+}
+
+
+
+  
+  .border-transparent {
+    border-color: transparent !important;
+  }
+
+  .border-two-px-solid {
+    border: 2px solid #0D042C;
+  }
+  .border-bottom-two-px-solid {
+    border-bottom: 3px solid #FFD200;
+  }
+  .border-neutral-two-px-solid {
+    border: 2px solid #FFFFFF4D;
+  }
+  .border-neutral-100 {
+    border: 1px solid #dcddd99d;
+  }
+  .border-base-two-100 {
+    border: 2px dashed #104042;
+  }
+  .border-bottom-base-two-600 {
+    border-bottom: 3px solid #104042;
+  }
+  .border-neutral-1px-solid {
+    border: 1px solid #C4C5C029;
+  }
+  .border-top-dark-500 {
+    border-top: 1px solid #242424;
+  }
+  .border-white {
+    border: 2px solid #fff;
+  }
+  .border-dashed-white {
+    border: 1px dashed #fff;
+  }
+  .border-solid-white-30-persent {
+    border: 1px solid #FFFFFF4D;
+  }
+  
+  .border-neutral-50 {
+    border: 1px solid #C4C5C066;
+  }
+  .border-warning-600-2px {
+    border: 2px solid #FFD200;
+  }
+  .border-neutral-200 {
+    border: 1px solid #C4C5C080;
+  }
+  .border-bottom-black-2px {
+    border-bottom: 2px solid #000000;
+  }
+  .border-primary-600 {
+    border: 3px solid #0000DF;
+  }
+  .border-primary-600-1px {
+    border: 1px solid #0000DF;
+  }
+  .border-bottom-dark-500 {
+    border-bottom: 1px solid #242424;
+  }
+  .border-neutral-35-6px {
+    border: 8px solid #E4F4EF;
+  }
+.border-dark-600 {
+  border-color: 4px solid #121212 !important;
+}
+.border-bottom-neutral-05 {
+  border-bottom: 1px solid #C4C5C0 !important;
+}

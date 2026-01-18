@@ -1,0 +1,19 @@
+.log-in-card {
+    @media (max-width: 992px) {
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+}
+.log-in-link-img {
+    @media (max-width: 1799px) {
+        inset-inline-start: 10%;
+    }
+    @media (max-width: 1699px) {
+        inset-inline-start: 8%;
+    }
+    @media (max-width: 1625px) {
+        inset-inline-start: 0;
+    }
+}

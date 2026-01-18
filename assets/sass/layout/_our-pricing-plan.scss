@@ -1,0 +1,12 @@
+.our-pricing-plan-three-link::before {
+    position: absolute; 
+    content: "";
+    background-color: #104042;
+    top: 4px;
+    left: 4px;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 8px;
+    transition: 0.4s;
+}

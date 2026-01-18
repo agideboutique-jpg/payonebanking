@@ -1,0 +1,51 @@
+.platform-two-link::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #FFD200;
+    top: 4px;
+    left: 4px;
+    z-index: -1;
+    border-radius: .5rem;
+    transition: .4s;
+}
+.platform-two-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: #FFD200;
+        top: -4px;
+        left: -4px;
+        z-index: -1;
+        border-radius: .5rem;
+    }
+}
+
+
+
+
+.payment-solutions {
+  &__content {
+    display: none;
+  }
+  &__item {
+    &.active {
+      .payment-solutions__button {
+        display: none;
+      }
+      .payment-solutions__content {
+        display: block;
+        transition: .5s;
+      }
+    }
+  }
+}
+
+.one-platform__title {
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,165 @@
+.fees-other-link::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 5px;
+    left: 4px;
+    background-color: #104042;
+    border-radius: 8px;
+    z-index: -1;
+    transition: .4s;
+}
+.fees-other-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        top: -5px;
+        left: -4px;
+        background-color: #104042;
+        border-radius: 8px;
+        z-index: -1;
+    }
+}
+.fees-other-circle-shape::before {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: transparent;
+    box-shadow: 0 -16px 0px #F5F9FC;
+    inset-inline-start: -33px;
+    inset-block-start: 0px;
+    transform: rotate(45deg);
+}
+.fees-other-circle-shape::after {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: transparent;
+    box-shadow: 0 -16px 0px #F5F9FC;
+    inset-inline-end: 2px;
+    inset-block-start: 75px;
+    transform: rotate(45deg);
+}
+
+
+
+/*======================= our pricing plan other css start =======================*/ 
+
+
+/*============================= our team member css start ============================*/ 
+.our-team-member::after {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: transparent;
+    box-shadow: 0 -16px 0px #F5F9FC;
+    inset-inline-end: 74px;
+    inset-block-start: 40px;
+    transform: rotate(134deg);
+}
+.our-team-member::before {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: transparent;
+    box-shadow: 0 -16px 0px #F5F9FC;
+    inset-inline-end: 0px;
+    inset-block-end: 72px;
+    transform: rotate(-232deg);
+}
+/*============================= our team member css end ============================*/ 
+
+
+
+.our-pricing-plan-other-link::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #104042;
+    border-radius: 8px;
+    top: 4px;
+    left: 4px;
+    z-index: -1;
+    transition: .5s;
+}
+.our-pricing-plan-other-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: #104042;
+        border-radius: 8px;
+        top: -4px;
+        left: -4px;
+        z-index: -1;
+    }
+}
+.our-pricing-plan-card {
+    transition: .5s;
+    &:hover {
+        .our-pricing-plan-other-link::after {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            border-radius: 8px;
+            top: 4px;
+            left: 4px;
+            z-index: -1;
+            transition: .5s;
+        }
+        .our-pricing-plan-other-link:hover {
+            &::after {
+                position: absolute;
+                content: "";
+                width: 100%;
+                height: 100%;
+                background-color: #fff;
+                border-radius: 8px;
+                top: -4px;
+                left: -4px;
+                z-index: -1;
+            }
+        }
+    }
+}
+.go-back-link::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 4px;
+    left: 4px;
+    background-color: #104042;
+    border-radius: 8px;
+    z-index: -1;
+    transition: .5s;
+}
+.go-back-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        top: -4px;
+        left: -4px;
+        background-color: #104042;
+        border-radius: 8px;
+        z-index: -1;
+    }
+}
+/*======================= our pricing plan other css end =======================*/ 

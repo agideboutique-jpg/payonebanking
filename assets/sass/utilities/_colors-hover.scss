@@ -1,0 +1,49 @@
+/* Hover color class start */
+@each $color, $shades in $colors {
+    @each $shade, $value in $shades {
+        .hover-text-#{$color}-#{$shade} {
+            &:hover {
+                color: var(--#{$color}-#{$shade}) !important;
+            }
+        }
+    }
+}
+
+/* Text Color */
+.hover-text {
+   &-white {
+        &:hover {
+            color: #fff !important;
+        }
+    }
+    &-heading {
+        &:hover {
+            color: hsl(var(--heading-color)) !important;
+        }
+    }
+    &-body {
+        &:hover {
+            color: hsl(var(--body-color)) !important;
+        }
+    }
+}
+
+.hover-bg-base-two-600:hover {
+    background: #104042;
+}
+.hover-border-bottom:hover {
+    border-bottom: 6px solid #AEFF1C;
+}
+.hover-bg-gray-50:hover {
+    background-color: #ECF1F9;
+}
+.grayscale {
+    filter: grayscale(100%);
+    opacity: 0.6;
+}
+.hover-grayscale:hover {
+    filter: grayscale(0);
+    opacity: 1;
+}
+
+/* Hover color class end */

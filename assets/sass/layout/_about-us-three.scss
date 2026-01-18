@@ -1,0 +1,49 @@
+.about-us-three-link::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: #104042;
+    top: 4px;
+    left: 3px;
+    z-index: -1;
+    border-radius: .5rem;
+    transition: .4s;
+}
+.about-us-three-link:hover {
+    &::before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        background-color: #104042;
+        top: -4px;
+        left: -2px;
+        z-index: -1;
+        border-radius: .5rem;
+    }
+}
+.accordion-button-three::after {
+    position: absolute;
+    content: "\E3D4";
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    background-color: #fff;
+    color: #121212;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Phosphor";
+    top: 0;
+    inset-inline-end: 0;
+    top: 50%;
+    transform: translateY(-50%)!important;
+    margin-right: 24px;
+}
+.accordion-button-three:not(.collapsed)::after {
+    background-image: none;
+    content: "\E32A";
+}
+

@@ -1,0 +1,88 @@
+.blog-details-link::before {
+    position: absolute;
+    content: "";
+    width: 138px;
+    height: 50px;
+    top: 4px;
+    left: 5px;
+    border-radius: 8px;
+    background-color: #104042;
+    z-index: -1;
+    transition: .4s;
+}
+.blog-details-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 138px;
+        height: 50px;
+        top: -3px;
+        left: -3px;
+        border-radius: 8px;
+        background-color: #104042;
+        z-index: -1;
+    }
+}
+.digital-marketing {
+    position: absolute;
+    background-color: #fff;
+    width: 165px;
+    height: 54px;
+    top: 0;
+    left: 0;
+    border-bottom-right-radius: 20px;
+}
+.digital-marketing::before {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    box-shadow: 0 -16px 0px #ffffff;
+    inset-inline-start: 0px;
+    top: 53px;
+    transform: rotate(-42deg);
+}
+.digital-marketing::after {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    box-shadow: 0 -16px 0px #ffffff;
+    inset-inline-start: 164px;
+    top: 0px;
+    transform: rotate(-45deg);
+}
+
+/*==================== blog grid css start ==========================*/ 
+.blog-grid__pinance {
+    @media (max-width: 1024px) {
+        max-width: 530px;
+    }
+    @media (max-width: 768px) {
+        max-width: 450px;
+    }
+    @media (max-width: 499px) {
+        max-width: 350px;
+    }
+    @media (max-width: 424px) {
+        max-width: 276px;
+    }
+}
+/*==================== blog grid css end ==========================*/ 
+
+
+
+/*=================== blog list css start ========================*/ 
+.blog-list__finance {
+    @media (max-width: 992px) {
+        max-width: 100%;
+    }
+}
+.blog-list-img {
+    @media (max-width: 992px) {
+        max-width: 100%;
+    }
+}
+/*=================== blog list css end ========================*/ 

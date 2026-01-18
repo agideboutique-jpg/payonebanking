@@ -1,0 +1,77 @@
+.works-two-link::before {
+    position: absolute;
+    content: "";
+    width: 221px;
+    height: 47px;
+    background-color: #104042;
+    z-index: -1;
+    top: 4px;
+    left: 4px;
+    transition: .4s;
+    border-radius: .5rem;
+}
+.works-two-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 221px;
+        height: 47px;
+        background-color: #104042;
+        z-index: -1;
+        top: -3px;
+        left: -3px;
+    }
+}
+.how-it-work-two-item-one {
+    @media (max-width: 1199px) {
+        margin-block-start: 42px;
+    }
+    @media (max-width: 768px) {
+        margin-block-start: 0px;
+    }
+}
+.how-it-work-two-item-two {
+    @media (max-width: 1199px) {
+        margin-block-start: 0px;
+    }
+}
+
+/* ========================== how it work four css start ====================== */ 
+.how-it-work-four__link::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #104042;
+    border-radius: 8px;
+    top: 3px;
+    left: 3px;
+    z-index: -1;
+    transition: .4s;
+}
+.how-it-work-four__link:hover {
+    &::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #104042;
+    border-radius: 8px;
+    top: -3px;
+    left: -3px;
+    z-index: -1;
+    }
+}
+.how-it-work-text{
+    @media (max-width: 1199px) {
+        margin-bottom: 122px;
+    }
+    @media (max-width: 992px) {
+        margin-bottom: 92px;
+    }
+    @media (max-width: 768px) {
+        margin-bottom: 144px;
+    }
+}
+/* ========================== how it work four css end ====================== */ 
+

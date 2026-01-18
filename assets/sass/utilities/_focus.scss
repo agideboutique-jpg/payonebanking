@@ -1,0 +1,15 @@
+.focus-border-none:focus-visible {
+    border: none !important;
+    outline: 0;
+}
+.focus-border-main-600:focus {
+    border: 1px solid #AEFF1C !important;
+}
+.focus-visible-border-main-600:focus-visible {
+    border: 1px solid #104042 !important;
+    outline: 0;
+}
+.form-check-input:focus {
+    outline: 0;
+    box-shadow: none;
+}

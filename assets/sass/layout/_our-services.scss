@@ -1,0 +1,236 @@
+
+.our-serbices-item-link::before {
+    position: absolute;
+    content: "";
+    background-color: #104042;
+    top: 5px;
+    left: 3px;
+    width: 160px;
+    height: 47px;
+    z-index: -1;
+    border-radius: 12px;
+    transition: .4s;
+}
+.our-serbices-item-link:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        background-color: #104042;
+        top: -5px;
+        left: -4px;
+        width: 160px;
+        height: 47px;
+        z-index: -1;
+        border-radius: 12px;
+    }
+}
+
+
+.our-services-card {
+    background-color: #F5F9FC;
+    border-radius: 12px;
+    transition: .4s;
+}
+.circle-shape::before, .circle-shape::after {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    inset-block-start: -2px;
+    inset-inline-start: -32px;
+    box-shadow: 0 -16px 0px #ffffff;
+    border-radius: 50%;
+    transform: rotate(45deg);
+}
+.circle-shape::after {
+    inset-block-start: 100%;
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    box-shadow: 0 -16px 0px #ffffff;
+}
+.circle-shape {
+    border-radius: 0 0  0 50% !important;
+}
+
+
+/*==================== our services two css start =======================*/
+.services-two-link::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 4px;
+    left: 4px;
+    z-index: -1;
+    background: #104042;
+    border-radius: .5rem;
+    transition: .4s;
+} 
+.services-two-link:hover {
+    &::before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        top: -4px;
+        left: -3px;
+        z-index: -1;
+        background: #104042;
+        border-radius: .5rem;
+    } 
+}
+.our-services-slider-card:hover {
+    &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: #104042;
+        border-radius: 12px;
+        top: 4px;
+        left: 4px;
+        z-index: -1;
+    }
+}
+/*==================== our services two css end =======================*/
+
+
+/*==================== our services three css start =======================*/
+.our-services-three-link::before {
+    position: absolute;
+    content: '';
+    width: 149px;
+    height: 47px;
+    top: 4px;
+    left: 4px;
+    z-index: -1;
+    background: #104042;
+    border-radius: .5rem;
+    transition: .4s;
+} 
+.our-services-three-link:hover {
+    &::before {
+        position: absolute;
+        content: '';
+        width: 149px;
+        height: 47px;
+        top: -4px;
+        left: -3px;
+        z-index: -1;
+        background: #104042;
+        border-radius: .5rem;
+    } 
+}
+
+.circle-shape-three::before, .circle-shape-three::after {
+    position: absolute;
+    content: "";
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    inset-block-start: -2px;
+    inset-inline-start: -32px;
+    box-shadow: 0 -16px 0px #F5F9FC;
+    border-radius: 50%;
+    transform: rotate(45deg);
+}
+.circle-shape-three::after {
+    inset-block-start: 100%;
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    box-shadow: 0 -16px 0px #F5F9FC;
+}
+.circle-shape-three {
+    border-radius: 0 0  0 50% !important;
+}
+
+
+.our-services-three-slide {
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+  .our-services-slide {
+    width: auto;
+    flex-shrink: 0;
+    width: calc((100% - 20px) / 2); /* 2 slides with 20px spaceBetween */
+  }
+
+  .our-serbices-card {
+    clip-path: polygon(9% 0, 100% 0, 100% 100%, 0 100%, 0 26%);
+  }
+  .our-services-three::before {
+    position: absolute;
+    content: "";
+    background-color: #104042;
+    max-width: 948px;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    clip-path: polygon(69% 0, 100% 61%, 100% 60%, 100% 100%, 0 100%, 0% 60%, 0 0);
+  }
+  .our-services-three::before{
+    @media (max-width: 1499px) {
+        max-width: 730px;
+        height: 100%;   
+    }
+    @media (max-width: 1320px) {
+        max-width: 600px;
+        height: 100%;   
+    }
+    @media (max-width: 1199px) {
+        max-width: 450px;
+        height: 100%;   
+    }
+    @media (max-width: 1050px) {
+        max-width: 370px;
+        height: 100%;   
+    }
+    @media (max-width: 799px) {
+        max-width: 300px;
+        height: 100%;   
+    }
+    @media (max-width: 650px) {
+        max-width: 266px;
+        height: 100%;   
+    }
+    @media (max-width: 550px) {
+        max-width: 230px;
+        height: 100%;   
+    }
+    @media (max-width: 468px) {
+        max-width: 200px;
+        height: 100%;   
+    }
+  }
+.our-services-item {
+    @media (max-width: 1399px) {
+        gap: 160px;
+    }
+    @media (max-width: 1201px) {
+        gap: 150px;
+    }
+    @media (max-width: 1199px) {
+        gap: 90px;
+    }
+    @media (max-width: 650px) {
+        gap: 50px;
+    }
+}
+
+.our-services-three-slider {
+    @media (max-width: 1099px) {
+        flex-wrap: wrap;
+    }
+}
+.swiper-pagination-bullet-active {
+    background-color: #104042;
+}
+/*==================== our services three css end =======================*/ 
+
+
+
+
+
+

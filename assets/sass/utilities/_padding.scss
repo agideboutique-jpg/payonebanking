@@ -1,0 +1,213 @@
+/* ================================= Padding Css Start =========================== */
+@each $property, $value in $spaces {
+  .tw-p-#{$property} {
+    padding: var(--size-#{$property});
+  }
+}
+
+@each $property, $value in $spaces {
+  .tw-px-#{$property} {
+    padding-inline: var(--size-#{$property});
+  }
+}
+
+@each $property, $value in $spaces {
+  .tw-py-#{$property} {
+    padding-block: var(--size-#{$property});
+  }
+}
+
+@each $property, $value in $spaces {
+  .tw-ps-#{$property} {
+    padding-inline-start: var(--size-#{$property});
+  }
+}
+
+@each $property, $value in $spaces {
+  .tw-pe-#{$property} {
+    padding-inline-end: var(--size-#{$property});
+  }
+}
+
+@each $property, $value in $spaces {
+  .tw-pt-#{$property} {
+    padding-block-start: var(--size-#{$property});
+  }
+}
+
+@each $property, $value in $spaces {
+  .tw-pb-#{$property} {
+    padding-block-end: var(--size-#{$property});
+  }
+}
+
+.tw {
+  &-p {
+    &-36-px {
+      padding: clamp(1rem, -6.1013rem + 9.4763vw, 2.25rem);
+    }
+    &-48-px {
+      padding: clamp(1.5rem, -12.1677rem + 32.9177vw, 3rem);
+    }
+    &-60-px {
+      padding: clamp(1.5rem, -12.1677rem + 32.9177vw, 3.75rem);
+    }
+  }
+}
+.tw-pt-250px {
+  padding-top: 250px;
+}
+
+.py-120 {
+  padding-block-start: 60px;
+  padding-block-end: 60px;
+  @media (min-width: 576px) {
+    padding-block-start: 80px;
+    padding-block-end: 80px;
+  }
+  @media (min-width: 992px) {
+    padding-block-start: 120px;
+    padding-block-end: 120px;
+  }
+}
+.py-140 {
+  padding-block-start: 70px;
+  padding-block-end: 70px;
+  @media (min-width: 576px) {
+    padding-block-start: 90px;
+    padding-block-end: 90px;
+  }
+  @media (min-width: 992px) {
+    padding-block-start: 140px;
+    padding-block-end: 140px;
+  }
+}
+.pt-140 {
+  padding-block-start: 70px;
+    @media (min-width: 576px) {
+      padding-block-start: 90px;
+    }
+  @media (min-width: 992px) {
+    padding-block-start: 140px;
+  }
+}
+.pb-140 {
+  padding-block-end: 70px;
+    @media (min-width: 576px) {
+      padding-block-end: 90px;
+    }
+  @media (min-width: 992px) {
+    padding-block-end: 140px;
+  }
+}
+.pt-120 {
+    padding-block-start: 60px;
+    @media (min-width: 576px) {
+      padding-block-start: 80px;
+    }
+    @media (min-width: 992px) {
+    padding-block-start: 120px;
+  }
+}
+.pb-120 {
+    padding-block-end: 60px;
+    @media (min-width: 576px) {
+      padding-block-end: 80px;
+    }
+    @media (min-width: 992px) {
+      padding-block-end: 120px;
+    }
+}
+.py-80 {
+    padding-block-start: 40px;
+    padding-block-end: 40px;
+    @media (min-width: 576px) {
+      padding-block-start: 60px;
+      padding-block-end: 60px;
+    }
+    @media (min-width: 992px) {
+      padding-block-start: 80px;
+      padding-block-end: 80px;
+    }
+}
+.px-80 {
+    padding-inline-start: 40px;
+    padding-inline-end: 40px;
+    @media (min-width: 576px) {
+      padding-inline-start: 60px;
+      padding-inline-end: 60px;
+    }
+    @media (min-width: 992px) {
+      padding-inline-start: 80px;
+      padding-inline-end: 80px;
+    }
+}
+.pt-80 {
+    padding-top: 40px;
+    @media (min-width: 576px) {
+      padding-top: 40px;
+    }
+    @media (min-width: 992px) {
+      padding-top: 40px;
+    }
+}
+.py-60 {
+    padding-block-start: 30px;
+    padding-block-end: 30px;
+    @media (min-width: 576px) {
+      padding-block-start: 40px;
+      padding-block-end: 40px;
+    }
+    @media (min-width: 992px) {
+      padding-block-start: 60px;
+      padding-block-end: 60px;
+    }
+}
+.pt-60 {
+    padding-block-start: 30px;
+    @media (min-width: 576px) {
+      padding-block-start: 40px;
+    }
+    @media (min-width: 992px) {
+      padding-block-start: 60px;
+    }
+}
+  .pb-60 {
+    padding-block-end: 30px;
+    @media (min-width: 576px) {
+      padding-block-end: 40px;
+    }
+    @media (min-width: 992px) {
+      padding-block-end: 60px;
+    }
+}
+.pt-311px {
+  padding-top: 311px;
+}
+.p-left-462px {
+  padding-left: 462px;
+}
+.tw-pt-140px {
+  padding-top: 140px;
+}
+.tw-pb-140px {
+  padding-bottom: 140px;
+}
+.tw-p-left-120-px {
+  padding-left: clamp(2.5rem, -1.838rem + 12.4611vw, 7.5rem);
+}
+.tw-pt-100-px {
+  padding-top: clamp(2rem, -1.6873rem + 10.5919vw, 6.25rem);
+}
+.tw-pr-80-px {
+  padding-right: clamp(2.5rem, 0.331rem + 6.2305vw, 5rem);
+}
+.tw-px-78-px {
+  padding-right: clamp(2.375rem, 0.206rem + 6.2305vw, 4.875rem);
+  padding-left: clamp(2.375rem, 0.206rem + 6.2305vw, 4.875rem);
+}
+.tw-px-72-px {
+  padding-right: clamp(2.25rem, 0.2979rem + 5.6075vw, 4.5rem);
+  padding-left: clamp(2.25rem, 0.2979rem + 5.6075vw, 4.5rem);
+}
+/* ================================= Padding Css End =========================== */

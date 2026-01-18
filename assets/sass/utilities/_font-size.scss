@@ -1,0 +1,33 @@
+/* Font Size Class Start */
+.text {
+  &-inherit {
+      font-size: inherit;
+  }
+}
+
+@each $property, $value in $font-sizes {
+  .tw-text-#{$property} {
+    font-size: $value;
+  }
+}  
+/* Font Size Class End */
+
+
+@each $property, $value in $spaces {
+    .tw-text-#{$property} {
+      font-size: $value;
+    }
+}  
+.tw-text-140-px {
+  font-size: clamp(2.5rem, -2.9225rem + 15.5763vw, 8.75rem);
+}
+.tw-text-80-px {
+  font-size: clamp(2.5rem, 0.331rem + 6.2305vw, 5rem);
+}
+.tw-text-70-px {
+  font-size: clamp(2.25rem, 0.4063rem + 5.296vw, 4.375rem);
+}
+.tw-text-52-px {
+  font-size: clamp(1.75rem, 1.0682rem + 3.4091vw, 3.25rem);
+}
+/* Font Size Class End */

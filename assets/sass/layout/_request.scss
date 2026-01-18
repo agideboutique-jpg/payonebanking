@@ -1,0 +1,56 @@
+.request-button::before {
+    position: absolute;
+    content: "";
+    background-color: #AEFF1C;
+    top: 5px;
+    left: 6px;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 8px;
+    transition: .4s;
+}
+.request-button:hover {
+   &::before {
+    position: absolute;
+    content: "";
+    background-color: #AEFF1C;
+    top: -5px;
+    left: -5px;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 8px;
+}   
+}
+.fast-safe::before {
+    position: absolute;
+    content: "";
+    background: linear-gradient(0deg, #104042 0%, rgba(16, 64, 66, 0) 100%);
+    width: 4px;
+    height: 201px;
+    animation: upDown 24s linear infinite;
+}
+.nav-link__one {
+    color: #121212 !important;
+    background-color: transparent !important;
+}
+.nav-pills .nav-link__one.active, .nav-pills .show > .nav-link__one {
+    background-color: #FFFFFF80 !important;
+    color: #121212 !important;
+} 
+.working-process {
+    @media (max-width: 768px) {
+        gap: 10px;
+    }
+    @media (max-width: 534px) {
+        gap: 0px;
+    }
+}
+.payment-method {
+    @media (max-width: 534px) {
+        margin-left: auto;
+    }
+}
+
+
