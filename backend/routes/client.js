@@ -1,456 +1,318 @@
 // ========================================
-// ROUTES CLIENT
+// 🦢 ROUTES ESPACE CLIENT
 // ========================================
 
 const express = require('express');
 const router = express.Router();
-const { User, Transaction } = require('../models');
-const { verifyToken, isClient } = require('../middleware/auth');
-const { sequelize } = require('../config/database');
-
-// Toutes les routes client nécessitent d'être connecté
-// verifyToken : vérifie le token JWT
-// isClient : vérifie que l'utilisateur est un client (pas admin)
+const User = require('../models/User');
+const Transaction = require('../models/Transaction');
+const Beneficiaire = require('../models/Beneficiaire');
+const authMiddleware = require('../middleware/auth');
 
 // ========================================
-// OBTENIR LE PROFIL DU CLIENT CONNECTÉ
-// GET /api/client/profile
+// 📊 RÉCUPÉRER LES INFORMATIONS DU PROFIL
 // ========================================
-
-router.get('/profile', verifyToken, isClient, async (req, res) => {
+router.get('/profile', authMiddleware, async (req, res) => {
   try {
-    // req.user contient les infos de l'utilisateur connecté (ajouté par verifyToken)
-    const user = await User.findByPk(req.user.id, {
-      attributes: { exclude: ['password'] } // On n'envoie pas le mot de passe
+    const user = await User.findByPk(req.userId, {
+      attributes: ['id', 'nom', 'email', 'telephone', 'adresse', 'solde', 'userType', 'createdAt']
     });
-    
+
     if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: 'Utilisateur non trouvé.'
-      });
+      return res.status(404).json({ message: 'Utilisateur introuvable' });
     }
-    
-    res.json({
-      success: true,
-      data: {
+
+    res.status(200).json({
+      message: 'Profil récupéré',
+      user: {
         id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        nom: user.nom,
         email: user.email,
-        phone: user.phone,
-        address: user.address,
-        city: user.city,
-        country: user.country,
-        postalCode: user.postalCode,
-        accountNumber: user.accountNumber,
-        balance: user.balance,
-        profilePhoto: user.profilePhoto,
-        createdAt: user.createdAt
+        telephone: user.telephone,
+        adresse: user.adresse,
+        solde: parseFloat(user.solde),
+        userType: user.userType,
+        memberSince: user.createdAt
       }
     });
-    
+
   } catch (error) {
     console.error('❌ Erreur récupération profil:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Erreur lors de la récupération du profil.',
-      error: error.message
-    });
+    res.status(500).json({ message: 'Erreur serveur' });
   }
 });
 
 // ========================================
-// MODIFIER LE PROFIL DU CLIENT
-// PUT /api/client/profile
+// 📜 RÉCUPÉRER L'HISTORIQUE DES TRANSACTIONS
 // ========================================
-
-router.put('/profile', verifyToken, isClient, async (req, res) => {
+router.get('/transactions', authMiddleware, async (req, res) => {
   try {
-    const {
-      firstName,
-      lastName,
-      phone,
-      address,
-      city,
-      country,
-      postalCode,
-      profilePhoto
-    } = req.body;
-    
-    const user = await User.findByPk(req.user.id);
-    
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: 'Utilisateur non trouvé.'
-      });
-    }
-    
-    // Mise à jour des champs (seulement ceux qui sont fournis)
-    if (firstName) user.firstName = firstName;
-    if (lastName) user.lastName = lastName;
-    if (phone) user.phone = phone;
-    if (address) user.address = address;
-    if (city) user.city = city;
-    if (country) user.country = country;
-    if (postalCode) user.postalCode = postalCode;
-    if (profilePhoto) user.profilePhoto = profilePhoto;
-    
-    await user.save();
-    
-    res.json({
-      success: true,
-      message: 'Profil mis à jour avec succès !',
-      data: {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        phone: user.phone,
-        address: user.address,
-        city: user.city,
-        country: user.country,
-        postalCode: user.postalCode,
-        accountNumber: user.accountNumber,
-        balance: user.balance,
-        profilePhoto: user.profilePhoto
-      }
-    });
-    
-  } catch (error) {
-    console.error('❌ Erreur modification profil:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Erreur lors de la modification du profil.',
-      error: error.message
-    });
-  }
-});
+    const { limit = 10, offset = 0 } = req.query;
 
-// ========================================
-// OBTENIR LE SOLDE DU CLIENT
-// GET /api/client/balance
-// ========================================
-
-router.get('/balance', verifyToken, isClient, async (req, res) => {
-  try {
-    const user = await User.findByPk(req.user.id, {
-      attributes: ['id', 'accountNumber', 'balance']
-    });
-    
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: 'Utilisateur non trouvé.'
-      });
-    }
-    
-    res.json({
-      success: true,
-      data: {
-        accountNumber: user.accountNumber,
-        balance: parseFloat(user.balance),
-        currency: 'XOF' // Franc CFA
-      }
-    });
-    
-  } catch (error) {
-    console.error('❌ Erreur récupération solde:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Erreur lors de la récupération du solde.',
-      error: error.message
-    });
-  }
-});
-
-// ========================================
-// OBTENIR L'HISTORIQUE DES TRANSACTIONS
-// GET /api/client/transactions
-// ========================================
-
-router.get('/transactions', verifyToken, isClient, async (req, res) => {
-  try {
-    const { limit = 50, offset = 0 } = req.query;
-    
-    // Récupérer toutes les transactions où l'utilisateur est émetteur OU destinataire
     const transactions = await Transaction.findAll({
-      where: {
-        [sequelize.Sequelize.Op.or]: [
-          { senderId: req.user.id },
-          { receiverId: req.user.id }
-        ]
-      },
-      include: [
-        {
-          model: User,
-          as: 'sender',
-          attributes: ['id', 'firstName', 'lastName', 'accountNumber']
-        },
-        {
-          model: User,
-          as: 'receiver',
-          attributes: ['id', 'firstName', 'lastName', 'accountNumber']
-        }
-      ],
+      where: { userId: req.userId },
       order: [['createdAt', 'DESC']],
       limit: parseInt(limit),
       offset: parseInt(offset)
     });
-    
-    // Formater les transactions
-    const formattedTransactions = transactions.map(t => ({
-      id: t.id,
-      reference: t.reference,
-      amount: parseFloat(t.amount),
-      type: t.type,
-      status: t.status,
-      description: t.description,
-      sender: t.sender ? {
-        id: t.sender.id,
-        name: `${t.sender.firstName} ${t.sender.lastName}`,
-        accountNumber: t.sender.accountNumber
-      } : null,
-      receiver: t.receiver ? {
-        id: t.receiver.id,
-        name: `${t.receiver.firstName} ${t.receiver.lastName}`,
-        accountNumber: t.receiver.accountNumber
-      } : null,
-      // Déterminer si c'est un crédit (reçu) ou débit (envoyé)
-      direction: t.receiverId === req.user.id ? 'credit' : 'debit',
-      createdAt: t.createdAt
-    }));
-    
-    res.json({
-      success: true,
-      data: formattedTransactions,
-      pagination: {
-        limit: parseInt(limit),
-        offset: parseInt(offset),
-        total: formattedTransactions.length
-      }
+
+    const total = await Transaction.count({
+      where: { userId: req.userId }
     });
-    
+
+    res.status(200).json({
+      message: 'Transactions récupérées',
+      transactions,
+      total,
+      limit: parseInt(limit),
+      offset: parseInt(offset)
+    });
+
   } catch (error) {
     console.error('❌ Erreur récupération transactions:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Erreur lors de la récupération des transactions.',
-      error: error.message
-    });
+    res.status(500).json({ message: 'Erreur serveur' });
   }
 });
 
 // ========================================
-// FAIRE UN VIREMENT
-// POST /api/client/transfer
+// 📊 STATISTIQUES DU COMPTE
 // ========================================
-
-router.post('/transfer', verifyToken, isClient, async (req, res) => {
-  // Transaction SQL pour garantir l'intégrité
-  const t = await sequelize.transaction();
-  
+router.get('/stats', authMiddleware, async (req, res) => {
   try {
-    const { receiverAccountNumber, amount, description } = req.body;
+    const user = await User.findByPk(req.userId);
     
-    // 1. Vérifications de base
-    if (!receiverAccountNumber || !amount) {
-      await t.rollback();
-      return res.status(400).json({
-        success: false,
-        message: 'Numéro de compte destinataire et montant requis.'
-      });
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur introuvable' });
     }
-    
-    const transferAmount = parseFloat(amount);
-    
-    if (transferAmount <= 0) {
-      await t.rollback();
-      return res.status(400).json({
-        success: false,
-        message: 'Le montant doit être supérieur à 0.'
-      });
-    }
-    
-    // 2. Récupérer l'émetteur (utilisateur connecté)
-    const sender = await User.findByPk(req.user.id, { transaction: t });
-    
-    if (!sender) {
-      await t.rollback();
-      return res.status(404).json({
-        success: false,
-        message: 'Émetteur non trouvé.'
-      });
-    }
-    
-    // 3. Vérifier qu'on n'envoie pas à soi-même
-    if (sender.accountNumber === receiverAccountNumber) {
-      await t.rollback();
-      return res.status(400).json({
-        success: false,
-        message: 'Vous ne pouvez pas effectuer un virement vers votre propre compte.'
-      });
-    }
-    
-    // 4. Vérifier le solde de l'émetteur
-    if (parseFloat(sender.balance) < transferAmount) {
-      await t.rollback();
-      return res.status(400).json({
-        success: false,
-        message: 'Solde insuffisant.',
-        currentBalance: parseFloat(sender.balance),
-        requestedAmount: transferAmount
-      });
-    }
-    
-    // 5. Récupérer le destinataire
-    const receiver = await User.findOne({
-      where: { accountNumber: receiverAccountNumber },
-      transaction: t
+
+    const transactions = await Transaction.findAll({
+      where: { userId: req.userId }
     });
-    
-    if (!receiver) {
-      await t.rollback();
-      return res.status(404).json({
-        success: false,
-        message: 'Compte destinataire non trouvé.'
-      });
-    }
-    
-    // 6. Vérifier que le compte destinataire est actif
-    if (!receiver.isActive) {
-      await t.rollback();
-      return res.status(400).json({
-        success: false,
-        message: 'Le compte destinataire est désactivé.'
-      });
-    }
-    
-    // 7. Effectuer le virement
-    // Débiter l'émetteur
-    sender.balance = parseFloat(sender.balance) - transferAmount;
-    await sender.save({ transaction: t });
-    
-    // Créditer le destinataire
-    receiver.balance = parseFloat(receiver.balance) + transferAmount;
-    await receiver.save({ transaction: t });
-    
-    // 8. Créer la transaction
-    const transaction = await Transaction.create({
-      senderId: sender.id,
-      receiverId: receiver.id,
-      amount: transferAmount,
-      type: 'transfer',
-      status: 'completed',
-      description: description || `Virement de ${sender.firstName} ${sender.lastName} à ${receiver.firstName} ${receiver.lastName}`
-    }, { transaction: t });
-    
-    // 9. Valider la transaction SQL
-    await t.commit();
-    
-    res.json({
-      success: true,
-      message: 'Virement effectué avec succès !',
-      data: {
-        transaction: {
-          id: transaction.id,
-          reference: transaction.reference,
-          amount: parseFloat(transaction.amount),
-          type: transaction.type,
-          status: transaction.status,
-          description: transaction.description,
-          createdAt: transaction.createdAt
-        },
-        sender: {
-          accountNumber: sender.accountNumber,
-          newBalance: parseFloat(sender.balance)
-        },
-        receiver: {
-          name: `${receiver.firstName} ${receiver.lastName}`,
-          accountNumber: receiver.accountNumber
-        }
+
+    let totalCredits = 0;
+    let totalDebits = 0;
+
+    transactions.forEach(t => {
+      if (t.type === 'credit') {
+        totalCredits += parseFloat(t.montant);
+      } else {
+        totalDebits += parseFloat(t.montant);
       }
     });
-    
-  } catch (error) {
-    // En cas d'erreur, annuler la transaction
-    await t.rollback();
-    console.error('❌ Erreur virement:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Erreur lors du virement.',
-      error: error.message
+
+    res.status(200).json({
+      message: 'Statistiques récupérées',
+      stats: {
+        soldeActuel: parseFloat(user.solde),
+        totalTransactions: transactions.length,
+        totalCredits: totalCredits.toFixed(2),
+        totalDebits: totalDebits.toFixed(2),
+        derniereMiseAJour: user.updatedAt
+      }
     });
+
+  } catch (error) {
+    console.error('❌ Erreur récupération stats:', error);
+    res.status(500).json({ message: 'Erreur serveur' });
   }
 });
 
 // ========================================
-// OBTENIR UNE TRANSACTION SPÉCIFIQUE
-// GET /api/client/transactions/:id
+// 🧪 ROUTE DE TEST : AJOUTER DES TRANSACTIONS
 // ========================================
-
-router.get('/transactions/:id', verifyToken, isClient, async (req, res) => {
+router.post('/add-test-transactions', authMiddleware, async (req, res) => {
   try {
-    const transaction = await Transaction.findOne({
-      where: {
-        id: req.params.id,
-        [sequelize.Sequelize.Op.or]: [
-          { senderId: req.user.id },
-          { receiverId: req.user.id }
-        ]
+    const userId = req.userId;
+
+    const testTransactions = [
+      {
+        userId,
+        type: 'credit',
+        montant: 500.00,
+        description: 'Dépôt initial',
+        beneficiaire: 'Payone Banking',
+        iban: null
       },
-      include: [
-        {
-          model: User,
-          as: 'sender',
-          attributes: ['id', 'firstName', 'lastName', 'accountNumber']
-        },
-        {
-          model: User,
-          as: 'receiver',
-          attributes: ['id', 'firstName', 'lastName', 'accountNumber']
-        }
-      ]
+      {
+        userId,
+        type: 'debit',
+        montant: 50.00,
+        description: 'Achat en ligne',
+        beneficiaire: 'Amazon',
+        iban: 'FR7630006000011234567890189'
+      },
+      {
+        userId,
+        type: 'credit',
+        montant: 200.00,
+        description: 'Virement reçu',
+        beneficiaire: 'Jean Dupont',
+        iban: 'FR7612345678901234567890123'
+      },
+      {
+        userId,
+        type: 'debit',
+        montant: 30.50,
+        description: 'Restaurant',
+        beneficiaire: 'Le Gourmet',
+        iban: null
+      },
+      {
+        userId,
+        type: 'credit',
+        montant: 1000.00,
+        description: 'Salaire',
+        beneficiaire: 'Entreprise XYZ',
+        iban: null
+      }
+    ];
+
+    await Transaction.bulkCreate(testTransactions);
+
+    const totalCredits = testTransactions
+      .filter(t => t.type === 'credit')
+      .reduce((sum, t) => sum + t.montant, 0);
+
+    const totalDebits = testTransactions
+      .filter(t => t.type === 'debit')
+      .reduce((sum, t) => sum + t.montant, 0);
+
+    const newBalance = totalCredits - totalDebits;
+
+    await User.update(
+      { solde: newBalance },
+      { where: { id: userId } }
+    );
+
+    res.status(200).json({
+      message: 'Transactions de test créées',
+      totalTransactions: testTransactions.length,
+      newBalance: newBalance.toFixed(2)
     });
-    
-    if (!transaction) {
-      return res.status(404).json({
-        success: false,
-        message: 'Transaction non trouvée.'
+
+  } catch (error) {
+    console.error('❌ Erreur création transactions test:', error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
+// ========================================
+// 💸 EFFECTUER UN VIREMENT PAR BÉNÉFICIAIRE
+// ========================================
+router.post('/transfer', authMiddleware, async (req, res) => {
+  console.log('📨 POST /api/client/transfer');
+  console.log('📦 Body reçu:', JSON.stringify(req.body, null, 2));
+  console.log('💸 Demande de virement de userId:', req.userId);
+
+  try {
+    const { beneficiaireId, montant, description } = req.body;
+    const userId = req.userId;
+
+    console.log('📥 Données reçues:', { beneficiaireId, montant, description });
+
+    // ✅ VALIDATION : Vérifier que SEULEMENT ces 3 champs sont présents
+    if (!beneficiaireId || !montant || !description) {
+      console.log('❌ Validation échouée - Champs manquants');
+      return res.status(400).json({ 
+        message: 'Tous les champs sont obligatoires (beneficiaireId, montant, description)' 
       });
     }
-    
-    res.json({
-      success: true,
-      data: {
-        id: transaction.id,
-        reference: transaction.reference,
-        amount: parseFloat(transaction.amount),
-        type: transaction.type,
-        status: transaction.status,
-        description: transaction.description,
-        sender: transaction.sender ? {
-          id: transaction.sender.id,
-          name: `${transaction.sender.firstName} ${transaction.sender.lastName}`,
-          accountNumber: transaction.sender.accountNumber
-        } : null,
-        receiver: transaction.receiver ? {
-          id: transaction.receiver.id,
-          name: `${transaction.receiver.firstName} ${transaction.receiver.lastName}`,
-          accountNumber: transaction.receiver.accountNumber
-        } : null,
-        direction: transaction.receiverId === req.user.id ? 'credit' : 'debit',
-        createdAt: transaction.createdAt
+
+    // Vérifier que le montant est positif
+    const amount = parseFloat(montant);
+    if (isNaN(amount) || amount <= 0) {
+      console.log('❌ Montant invalide:', montant);
+      return res.status(400).json({ message: 'Le montant doit être supérieur à 0' });
+    }
+
+    // Récupérer l'utilisateur (expéditeur)
+    const user = await User.findByPk(userId);
+    if (!user) {
+      console.log('❌ Utilisateur introuvable:', userId);
+      return res.status(404).json({ message: 'Utilisateur introuvable' });
+    }
+
+    console.log('👤 Utilisateur trouvé:', user.nom, '- Solde actuel:', user.solde);
+
+    // Vérifier que le compte est actif
+    if (!user.isActive) {
+      console.log('❌ Compte désactivé');
+      return res.status(403).json({ message: 'Votre compte est désactivé' });
+    }
+
+    // Vérifier que l'utilisateur a assez d'argent
+    if (parseFloat(user.solde) < amount) {
+      console.log('❌ Solde insuffisant:', user.solde, '<', amount);
+      return res.status(400).json({ 
+        message: `Solde insuffisant. Votre solde actuel est de ${parseFloat(user.solde).toFixed(2)} €` 
+      });
+    }
+
+    // Récupérer le bénéficiaire
+    const beneficiaire = await Beneficiaire.findOne({
+      where: { 
+        id: beneficiaireId,
+        userId: userId
       }
     });
-    
+
+    if (!beneficiaire) {
+      console.log('❌ Bénéficiaire introuvable');
+      return res.status(404).json({ 
+        message: 'Bénéficiaire introuvable' 
+      });
+    }
+
+    console.log('✅ Bénéficiaire trouvé:', beneficiaire.nom, '-', beneficiaire.iban, '- Statut:', beneficiaire.statut);
+
+    // Vérifier que le bénéficiaire est validé
+    if (beneficiaire.statut !== 'valide') {
+      console.log('❌ Bénéficiaire non validé. Statut:', beneficiaire.statut);
+      return res.status(403).json({ 
+        message: `Ce bénéficiaire n'est pas encore validé. Statut actuel : ${beneficiaire.statut}` 
+      });
+    }
+
+    // Créer la transaction de débit (retrait du compte de l'utilisateur)
+    const transactionDebit = await Transaction.create({
+      userId: userId,
+      type: 'debit',
+      montant: amount,
+      description: description,
+      beneficiaire: beneficiaire.nom,
+      iban: beneficiaire.iban
+    });
+
+    console.log('✅ Transaction créée:', transactionDebit.id);
+
+    // Mettre à jour le solde de l'utilisateur
+    const newBalance = parseFloat(user.solde) - amount;
+    await User.update(
+      { solde: newBalance },
+      { where: { id: user.id } }
+    );
+
+    console.log('✅ Nouveau solde:', newBalance.toFixed(2));
+    console.log('🎉 Virement réussi !');
+
+    // Réponse au client
+    res.status(200).json({
+      message: 'Virement effectué avec succès',
+      virement: {
+        montant: amount.toFixed(2),
+        beneficiaire: beneficiaire.nom,
+        iban: beneficiaire.iban,
+        description: description,
+        nouveauSolde: newBalance.toFixed(2),
+        date: new Date()
+      }
+    });
+
   } catch (error) {
-    console.error('❌ Erreur récupération transaction:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Erreur lors de la récupération de la transaction.',
-      error: error.message
+    console.error('❌ Erreur lors du virement:', error);
+    res.status(500).json({ 
+      message: 'Erreur lors du virement',
+      error: error.message 
     });
   }
 });

@@ -80,69 +80,73 @@ router.post('/register', async (req, res) => {
 });
 
 // ========================================
-// 🔐 CONNEXION
+// 🔐 ROUTE DE CONNEXION
 // ========================================
 router.post('/login', async (req, res) => {
   try {
+    console.log('📥 Tentative de connexion pour:', req.body.email);
+    
     const { email, password } = req.body;
 
-    console.log('📨 Tentative de connexion pour:', email);
-
-    // Validation
+    // Vérifier que les champs sont présents
     if (!email || !password) {
-      return res.status(400).json({ message: 'Email et mot de passe requis' });
+      return res.status(400).json({ 
+        message: 'Email et mot de passe requis' 
+      });
     }
 
-    // Chercher l'utilisateur
+    // Chercher l'utilisateur dans la base de données
     const user = await User.findOne({ where: { email } });
-
     if (!user) {
-      console.log('❌ Utilisateur introuvable');
-      return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
-    }
-
-    // Vérifier que le compte est actif
-    if (!user.isActive) {
-      console.log('❌ Compte désactivé');
-      return res.status(403).json({ message: 'Votre compte a été désactivé. Contactez l\'administrateur.' });
+      return res.status(401).json({ 
+        message: 'Email ou mot de passe incorrect' 
+      });
     }
 
     // Vérifier le mot de passe
     const isPasswordValid = await bcrypt.compare(password, user.password);
-
     if (!isPasswordValid) {
-      console.log('❌ Mot de passe incorrect');
-      return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
+      return res.status(401).json({ 
+        message: 'Email ou mot de passe incorrect' 
+      });
     }
 
-    // Générer le token JWT
+    // Vérifier si le compte est actif
+    if (!user.isActive) {
+      return res.status(403).json({ 
+        message: 'Votre compte a été désactivé. Contactez un administrateur.' 
+      });
+    }
+
+    // Générer un token JWT (valide 24h)
     const token = jwt.sign(
       { 
-        id: user.id, 
+        userId: user.id, 
         email: user.email,
-        userType: user.userType  // ✅ AJOUTER LE TYPE
+        userType: user.userType 
       },
       process.env.JWT_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '24h' }
     );
 
-    console.log('✅ Connexion réussie pour:', user.nom, '- Type:', user.userType);
+    console.log('✅ Connexion réussie pour:', user.email);
 
-    // Réponse avec le token ET le userType
+    // Réponse de succès avec les informations de l'utilisateur
     res.status(200).json({
       message: 'Connexion réussie',
       token,
-      user: {
-        id: user.id,
-        nom: user.nom,
-        email: user.email,
-        userType: user.userType  // ✅ RENVOYER LE TYPE
-      }
+      userId: user.id,
+      userType: user.userType,
+      nom: user.nom,
+      email: user.email,
+      solde: user.solde
     });
 
   } catch (error) {
     console.error('❌ Erreur connexion:', error);
-    res.status(500).json({ message: 'Erreur serveur' });
+    res.status(500).json({ 
+      message: 'Erreur serveur lors de la connexion' 
+    });
   }
 });
 

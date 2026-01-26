@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ✅ PROTECTION ADMIN -->
+    <script src="/assets/js/protect-admin.js"></script>
+
+    <title>Dashboard Admin - Payone Banking</title>
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body class="bg-light">
+    <div class="container-fluid mt-4">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-0">👨‍💼 Dashboard Administrateur</h2>
+                <p class="text-muted mb-0">Payone Banking - Espace de gestion</p>
+            </div>
+            <div>
+                <button onclick="logout()" class="btn btn-outline-danger">
+                    <i class="ph ph-sign-out"></i> Déconnexion
+                </button>
+            </div>
+        </div>
+
+        <!-- Infos Admin -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5 class="mb-1">Bienvenue, <span id="admin-name"
+                                        class="text-primary">Administrateur</span></h5>
+                                <p class="text-muted mb-0">
+                                    <i class="ph ph-envelope"></i> <span id="admin-email">admin@payonebank.com</span>
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <span class="badge bg-danger fs-6 px-3 py-2">
+                                    <i class="ph ph-shield-check"></i> ADMINISTRATEUR
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques principales -->
+        <div class="row mb-4">
+            <!-- Clients -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded">
+                                    <i class="ph ph-users text-primary" style="font-size: 2.5rem;"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-grow-1">
+                                <h6 class="text-muted mb-1">Clients</h6>
+                                <h2 class="mb-0" id="stat-clients-total">-</h2>
+                                <small class="text-success" id="stat-clients-actifs">- actifs</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transactions -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="bg-success bg-opacity-10 p-3 rounded">
+                                    <i class="ph ph-swap text-success" style="font-size: 2.5rem;"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-grow-1">
+                                <h6 class="text-muted mb-1">Transactions</h6>
+                                <h2 class="mb-0" id="stat-transactions-total">-</h2>
+                                <small class="text-info" id="stat-transactions-today">- aujourd'hui</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Volume -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="bg-warning bg-opacity-10 p-3 rounded">
+                                    <i class="ph ph-coins text-warning" style="font-size: 2.5rem;"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-grow-1">
+                                <h6 class="text-muted mb-1">Volume Total</h6>
+                                <h2 class="mb-0" id="stat-volume-total">- €</h2>
+                                <small class="text-muted">Crédits + Débits</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bénéficiaires en attente -->
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="bg-danger bg-opacity-10 p-3 rounded">
+                                    <i class="ph ph-clock text-danger" style="font-size: 2.5rem;"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-grow-1">
+                                <h6 class="text-muted mb-1">IBANs en attente</h6>
+                                <h2 class="mb-0" id="stat-benef-attente">-</h2>
+                                <small class="text-success" id="stat-benef-valides">- validés aujourd'hui</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions rapides -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">⚡ Actions Rapides</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <!-- Gérer les bénéficiaires -->
+                            <div class="col-md-4">
+                                <a href="/admin-beneficiaires.html" class="text-decoration-none">
+                                    <div class="card border-warning h-100 hover-shadow">
+                                        <div class="card-body text-center">
+                                            <div class="bg-warning bg-opacity-10 p-3 rounded-circle d-inline-flex mb-3">
+                                                <i class="ph ph-clock text-warning" style="font-size: 2rem;"></i>
+                                            </div>
+                                            <h5 class="mb-2">Bénéficiaires en attente</h5>
+                                            <p class="text-muted mb-3 small">Valider ou refuser les IBANs</p>
+                                            <span class="badge bg-warning" id="badge-benef-attente">0</span> en attente
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Gérer les clients -->
+                            <div class="col-md-4">
+                                <a href="/admin-clients.html" class="text-decoration-none">
+                                    <div class="card border-primary h-100 hover-shadow">
+                                        <div class="card-body text-center">
+                                            <div class="bg-primary bg-opacity-10 p-3 rounded-circle d-inline-flex mb-3">
+                                                <i class="ph ph-users text-primary" style="font-size: 2rem;"></i>
+                                            </div>
+                                            <h5 class="mb-2">Gérer les clients</h5>
+                                            <p class="text-muted mb-3 small">Voir, modifier, activer/désactiver</p>
+                                            <span class="badge bg-primary" id="badge-clients-total">0</span> clients
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Voir les transactions (bientôt) -->
+                            <div class="col-md-4">
+                                <div class="card border-secondary h-100">
+                                    <div class="card-body text-center opacity-50">
+                                        <div class="bg-secondary bg-opacity-10 p-3 rounded-circle d-inline-flex mb-3">
+                                            <i class="ph ph-chart-line text-secondary" style="font-size: 2rem;"></i>
+                                        </div>
+                                        <h5 class="mb-2">Toutes les transactions</h5>
+                                        <p class="text-muted mb-0 small">Bientôt disponible</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Détails des transactions -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">💰 Répartition des transactions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Crédits</span>
+                                <strong class="text-success" id="stat-credits">0.00 €</strong>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div id="progress-credits" class="progress-bar bg-success" role="progressbar"
+                                    style="width: 50%">50%</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Débits</span>
+                                <strong class="text-danger" id="stat-debits">0.00 €</strong>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div id="progress-debits" class="progress-bar bg-danger" role="progressbar"
+                                    style="width: 50%">50%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">👥 État des clients</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Clients actifs</span>
+                                <strong class="text-success" id="clients-actifs-detail">0</strong>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div id="progress-actifs" class="progress-bar bg-success" role="progressbar"
+                                    style="width: 100%">100%</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Clients inactifs</span>
+                                <strong class="text-danger" id="clients-inactifs-detail">0</strong>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div id="progress-inactifs" class="progress-bar bg-danger" role="progressbar"
+                                    style="width: 0%">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/phosphor-icon.js"></script>
+    <script src="assets/js/boostrap.bundle.min.js"></script>
+    <script src="/assets/js/admin-dashboard.js"></script>
+
+    <style>
+        .hover-shadow {
+            transition: all 0.3s ease;
+        }
+
+        .hover-shadow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        }
+    </style>
+</body>
+
+</html>

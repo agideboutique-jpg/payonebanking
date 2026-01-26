@@ -12,9 +12,9 @@ const sequelize = new Sequelize(
   process.env.DB_PASSWORD,  // Mot de passe : (vide)
   {
     host: process.env.DB_HOST,     // localhost
-    port: process.env.DB_PORT,     // 3306
+    port: process.env.DB_PORT || 3306,     // 3306
     dialect: 'mysql',              // On utilise MySQL
-    logging: false,                // Mettre true pour voir les requêtes SQL
+    logging: console.log,                // Mettre true pour voir les requêtes SQL
     
     // Configuration du pool de connexions
     pool: {
@@ -31,24 +31,5 @@ const sequelize = new Sequelize(
   }
 );
 
-// Fonction pour tester et établir la connexion
-const connectDB = async () => {
-  try {
-    // Test de connexion
-    await sequelize.authenticate();
-    console.log('✅ MySQL connecté avec succès à la base payonebank');
-    
-    // Synchronise les modèles avec la base de données
-    // alter: true = met à jour les tables existantes
-    await sequelize.sync({ alter: true });
-    console.log('✅ Tables synchronisées');
-    
-  } catch (error) {
-    console.error('❌ Erreur de connexion MySQL:', error.message);
-    console.error('Vérifiez que WAMP est démarré et que la base payonebank existe');
-    process.exit(1); // Arrête le programme si la connexion échoue
-  }
-};
-
-// Export de sequelize et de la fonction de connexion
-module.exports = { sequelize, connectDB };
+// Export direct de l'instance sequelize
+module.exports = sequelize;

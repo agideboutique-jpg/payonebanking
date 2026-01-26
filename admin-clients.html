@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ✅ PROTECTION ADMIN -->
+    <script src="/assets/js/protect-admin.js"></script>
+    
+    <title>Gestion des Clients - Admin Payone</title>
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body class="bg-light">
+    <div class="container-fluid mt-4">
+        
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-0">👥 Gestion des Clients</h2>
+                <p class="text-muted mb-0">Administration des comptes clients</p>
+            </div>
+            <div>
+                <a href="/admin-dashboard.html" class="btn btn-outline-secondary">
+                    <i class="ph ph-arrow-left"></i> Retour au Dashboard
+                </a>
+            </div>
+        </div>
+
+        <!-- Barre de recherche -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="ph ph-magnifying-glass"></i>
+                            </span>
+                            <input 
+                                type="text" 
+                                id="search-input" 
+                                class="form-control" 
+                                placeholder="Rechercher par nom ou email..."
+                            >
+                            <button class="btn btn-primary" id="search-btn">
+                                Rechercher
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button class="btn btn-outline-secondary" id="reset-btn">
+                            <i class="ph ph-arrow-clockwise"></i> Réinitialiser
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques rapides -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded">
+                                    <i class="ph ph-users text-primary" style="font-size: 2rem;"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="text-muted mb-1">Total Clients</h6>
+                                <h3 class="mb-0" id="count-total">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="bg-success bg-opacity-10 p-3 rounded">
+                                    <i class="ph ph-check-circle text-success" style="font-size: 2rem;"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="text-muted mb-1">Actifs</h6>
+                                <h3 class="mb-0" id="count-actifs">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="bg-danger bg-opacity-10 p-3 rounded">
+                                    <i class="ph ph-x-circle text-danger" style="font-size: 2rem;"></i>
+                                </div>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="text-muted mb-1">Inactifs</h6>
+                                <h3 class="mb-0" id="count-inactifs">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des clients -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white border-bottom">
+                <h5 class="mb-0">📋 Liste des clients</h5>
+            </div>
+            <div class="card-body p-0">
+                
+                <!-- Message si aucun client -->
+                <div id="no-clients" class="text-center py-5" style="display: none;">
+                    <i class="ph ph-users text-muted" style="font-size: 4rem;"></i>
+                    <h5 class="mt-3 text-muted">Aucun client trouvé</h5>
+                </div>
+
+                <!-- Tableau -->
+                <div id="clients-list" class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Client</th>
+                                <th>Email</th>
+                                <th>Téléphone</th>
+                                <th>Solde</th>
+                                <th>Statut</th>
+                                <th>Inscription</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clients-tbody">
+                            <!-- Rempli dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal détails client -->
+    <div class="modal fade" id="detailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">👤 Détails du client</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modal-details-content">
+                    <!-- Rempli dynamiquement -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal modification solde -->
+    <div class="modal fade" id="soldeModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">💰 Modifier le solde</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Client :</strong> <span id="modal-solde-nom"></span></p>
+                    <p><strong>Solde actuel :</strong> <span id="modal-solde-actuel" class="fw-bold"></span> €</p>
+                    
+                    <hr>
+
+                    <div class="mb-3">
+                        <label class="form-label">Type d'opération*</label>
+                        <select class="form-select" id="solde-type">
+                            <option value="credit">➕ Crédit (ajouter au solde)</option>
+                            <option value="debit">➖ Débit (retirer du solde)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Montant* (€)</label>
+                        <input type="number" class="form-control" id="solde-montant" step="0.01" min="0.01" placeholder="100.00">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Description* (raison de la modification)</label>
+                        <textarea class="form-control" id="solde-description" rows="3" placeholder="Ex: Correction de solde, Remboursement..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" id="confirm-solde-btn">
+                        <i class="ph ph-check"></i> Confirmer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/phosphor-icon.js"></script>
+    <script src="assets/js/boostrap.bundle.min.js"></script>
+    <script src="/assets/js/admin-clients.js"></script>
+</body>
+</html>

@@ -1,42 +1,78 @@
 // ========================================
-// DÉFINITION DES RELATIONS ENTRE MODÈLES
+// 📦 INDEX DES MODÈLES ET RELATIONS
 // ========================================
+
+const { Sequelize } = require('sequelize');
+require('dotenv').config();
+
+// Configuration de la connexion à la base de données
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: 'mysql',
+    logging: false,
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  }
+);
+
+// ========================================
+// 📥 IMPORT DES MODÈLES
+// ========================================
+// Les modèles sont déjà initialisés avec sequelize.define() dans leurs fichiers respectifs
 
 const User = require('./User');
 const Transaction = require('./Transaction');
+const Beneficiaire = require('./Beneficiaire');
 
 // ========================================
-// RELATIONS USER ↔ TRANSACTION
+// 🔗 DÉFINITION DES RELATIONS
 // ========================================
 
-// 1. Un utilisateur peut ENVOYER plusieurs transactions
-User.hasMany(Transaction, {
-  foreignKey: 'senderId',       // Colonne sender_id dans transactions
-  as: 'sentTransactions'        // Alias pour récupérer les données
+// Relations User ↔ Transaction
+User.hasMany(Transaction, { 
+  foreignKey: 'userId', 
+  as: 'transactions',
+  onDelete: 'CASCADE'
 });
 
-// 2. Un utilisateur peut RECEVOIR plusieurs transactions
-User.hasMany(Transaction, {
-  foreignKey: 'receiverId',
-  as: 'receivedTransactions'
+Transaction.belongsTo(User, { 
+  foreignKey: 'userId', 
+  as: 'user'
 });
 
-// 3. Une transaction appartient à un ÉMETTEUR
-Transaction.belongsTo(User, {
-  foreignKey: 'senderId',
-  as: 'sender'                  // Alias pour récupérer l'émetteur
+// Relations User ↔ Beneficiaire (client qui crée le bénéficiaire)
+User.hasMany(Beneficiaire, { 
+  foreignKey: 'userId', 
+  as: 'beneficiaires',
+  onDelete: 'CASCADE'
 });
 
-// 4. Une transaction appartient à un DESTINATAIRE
-Transaction.belongsTo(User, {
-  foreignKey: 'receiverId',
-  as: 'receiver'                // Alias pour récupérer le destinataire
+Beneficiaire.belongsTo(User, { 
+  foreignKey: 'userId', 
+  as: 'user'
+});
+
+// Relation Beneficiaire ↔ User (admin validateur)
+Beneficiaire.belongsTo(User, { 
+  foreignKey: 'validePar', 
+  as: 'validateur'
 });
 
 // ========================================
-// EXPORT DES MODÈLES
+// 📤 EXPORT
 // ========================================
+
 module.exports = {
+  sequelize,
   User,
-  Transaction
+  Transaction,
+  Beneficiaire
 };

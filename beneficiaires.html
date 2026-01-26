@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ✅ PROTECTION CLIENT - DOIT ÊTRE EN PREMIER -->
+    <script src="/assets/js/protect-client.js"></script>
+    
+    <title>Mes Bénéficiaires - Payone Banking</title>
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+<!-- Header -->
+<div class="header bg-white tw-py-505">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="index.html">
+                <img src="assets/images/logo/logo2.png" alt="Logo">
+            </a>
+            <a href="/dashboard.html" class="btn btn-primary">
+                ← Retour au dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Banner -->
+<div class="tw-h-333-px bg-base-two-600 position-relative z-1"></div>
+
+<!-- Contenu principal -->
+<section class="bg-neutral-10 z-1">
+    <div class="container">
+        <div class="tw-pb-8 tw-mt--193px">
+            
+            <div class="bg-white rounded-3 tw-px-10 tw-py-8 tw-mb-6">
+                <h3 class="fw-semibold text-dark-600 tw-mb-2">
+                    <i class="ph ph-users-three"></i> Mes Bénéficiaires
+                </h3>
+                <p class="text-muted">
+                    Gérez vos bénéficiaires pour effectuer des virements. 
+                    Les bénéficiaires doivent être validés avant de pouvoir recevoir des virements.
+                </p>
+            </div>
+
+            <div class="row">
+                
+                <!-- Formulaire d'ajout -->
+                <div class="col-lg-4">
+                    <div class="bg-white rounded-3 tw-px-8 tw-py-8 h-100">
+                        <h5 class="fw-semibold text-dark-600 tw-mb-6">
+                            <i class="ph ph-plus-circle"></i> Ajouter un bénéficiaire
+                        </h5>
+
+                        <form id="add-beneficiaire-form">
+                            
+                            <!-- Nom -->
+                            <div class="tw-mb-6">
+                                <label for="benef-nom" class="fw-semibold tw-text-4 text-dark-600 tw-mb-3 d-block">
+                                    Nom du bénéficiaire*
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="benef-nom" 
+                                    placeholder="Ex: Jean Dupont"
+                                    class="fw-normal tw-text-4 text-dark-500 tw-py-3 tw-px-4 border border-neutral-05 rounded-3 w-100"
+                                    required
+                                >
+                            </div>
+
+                            <!-- IBAN -->
+                            <div class="tw-mb-6">
+                                <label for="benef-iban" class="fw-semibold tw-text-4 text-dark-600 tw-mb-3 d-block">
+                                    IBAN*
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="benef-iban" 
+                                    placeholder="FR76 1234 5678 9012 3456 7890 123"
+                                    class="fw-normal tw-text-4 text-dark-500 tw-py-3 tw-px-4 border border-neutral-05 rounded-3 w-100"
+                                    maxlength="34"
+                                    required
+                                >
+                                <small class="text-muted tw-text-3 d-block tw-mt-2">
+                                    Format : 15 à 34 caractères
+                                </small>
+                            </div>
+
+                            <!-- Info -->
+                            <div class="alert alert-info tw-mb-6">
+                                <i class="ph ph-info"></i>
+                                <small>
+                                    Le bénéficiaire sera validé automatiquement dans 24h ou manuellement par un administrateur.
+                                </small>
+                            </div>
+
+                            <!-- Bouton -->
+                            <button 
+                                type="submit" 
+                                class="btn bg-base-two-600 text-white w-100 tw-py-3"
+                            >
+                                <i class="ph ph-plus"></i> Ajouter le bénéficiaire
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Liste des bénéficiaires -->
+                <div class="col-lg-8">
+                    <div class="bg-white rounded-3 tw-px-8 tw-py-8">
+                        <h5 class="fw-semibold text-dark-600 tw-mb-6">
+                            <i class="ph ph-list"></i> Mes bénéficiaires enregistrés
+                        </h5>
+
+                        <!-- Container pour la liste -->
+                        <div id="beneficiaires-list">
+                            <!-- Chargement -->
+                            <div class="text-center py-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Chargement...</span>
+                                </div>
+                                <p class="mt-3 text-muted">Chargement des bénéficiaires...</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Scripts -->
+<script src="assets/js/jquery-3.7.1.min.js"></script>
+<script src="assets/js/phosphor-icon.js"></script>
+<script src="assets/js/boostrap.bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+
+<!-- Script de gestion des bénéficiaires -->
+<script src="assets/js/beneficiaires.js"></script>
+
+</body>
+</html>

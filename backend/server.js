@@ -2,16 +2,23 @@
 // SERVEUR PRINCIPAL DE L'APPLICATION
 // ========================================
 
+
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-const { connectDB } = require('./config/database');
+
+// Import de Sequelize ET des modèles
+const { sequelize, User, Transaction, Beneficiaire } = require('./models/index');
 
 // Initialisation de l'application Express
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// 👇 CES 2 LIGNES DOIVENT ÊTRE LÀ
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // ========================================
 // MIDDLEWARES (ORDRE IMPORTANT !)
@@ -74,6 +81,12 @@ app.use('/api/auth', require('./routes/auth'));
 // Routes client
     app.use('/api/client', require('./routes/client'));
 
+// Routes bénéficiaires
+    app.use('/api/beneficiaires', require('./routes/beneficiaire'));
+
+// ✅ AJOUTER CETTE LIGNE - Routes admin
+app.use('/api/admin', require('./routes/admin'));
+
 // Routes admin (à créer)
 // app.use('/api/admin', require('./routes/admin'));
 
@@ -109,24 +122,28 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
   try {
     // 1. Connexion à la base de données
-    await connectDB();
+    await sequelize.authenticate();
+    console.log('✅ MySQL connecté avec succès à la base', process.env.DB_NAME);
     
-    // 2. Démarrage du serveur
+    // 2. Synchroniser les modèles avec la base de données
+    await sequelize.sync(); // Mode normal
+    console.log('✅ Tables synchronisées');
+    
+    // 3. Démarrage du serveur
     app.listen(PORT, () => {
       console.log('\n========================================');
       console.log('🏦  PAYONE BANKING - SERVEUR DÉMARRÉ');
       console.log('========================================');
       console.log(`🌐  URL: http://localhost:${PORT}`);
       console.log(`📡  API: http://localhost:${PORT}/api`);
-      console.log(`🗄️  Base de données: payonebank (MySQL)`);
+      console.log(`🗄️  Base de données: ${process.env.DB_NAME} (MySQL)`);
       console.log('========================================');
       console.log('\n✅  Serveur prêt à recevoir des requêtes');
       console.log('📋  Routes disponibles:');
       console.log('     - GET  /api');
       console.log('     - GET  /api/health');
-      console.log('     - POST /api/auth/signup');
+      console.log('     - POST /api/auth/register');
       console.log('     - POST /api/auth/login');
-      console.log('     - POST /api/auth/create-admin');
       console.log('\n⏹️   Appuyez sur Ctrl+C pour arrêter\n');
     });
     
