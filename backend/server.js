@@ -20,6 +20,9 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Routes codes de transaction
+app.use('/api/transaction-codes', require('./routes/transaction-code'));
+
 // ========================================
 // MIDDLEWARES (ORDRE IMPORTANT !)
 // ========================================

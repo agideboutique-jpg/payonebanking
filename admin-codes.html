@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Protection Admin -->
+    <script src="/assets/js/protect-admin.js"></script>
+    
+    <title>Codes de Transaction - Admin</title>
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body class="bg-light">
+    <div class="container-fluid mt-4">
+        
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-0">🔐 Codes de Transaction</h2>
+                <p class="text-muted mb-0">Générer et gérer les codes OTP pour virements sécurisés</p>
+            </div>
+            <div>
+                <a href="/admin-dashboard.html" class="btn btn-outline-secondary">
+                    <i class="ph ph-arrow-left"></i> Retour au Dashboard
+                </a>
+            </div>
+        </div>
+
+        <!-- Formulaire de génération -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="ph ph-plus-circle"></i> Générer un nouveau code</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="generate-code-form">
+                            <div class="mb-3">
+                                <label for="client-select" class="form-label">Client*</label>
+                                <select class="form-select" id="client-select" required>
+                                    <option value="">-- Sélectionner un client --</option>
+                                    <!-- Rempli dynamiquement -->
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="duree-minutes" class="form-label">Durée de validité (minutes)</label>
+                                <input type="number" class="form-control" id="duree-minutes" value="10" min="1" max="60">
+                                <div class="form-text">Le code expirera automatiquement après cette durée</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="ph ph-key"></i> Générer le code
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code généré -->
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0" id="code-display" style="display: none;">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="ph ph-check-circle"></i> Code généré avec succès</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="text-muted mb-2">Communiquez ce code au client :</p>
+                        <h1 class="display-3 fw-bold text-primary mb-3" id="generated-code">000000</h1>
+                        <div class="alert alert-info">
+                            <strong>Client :</strong> <span id="code-client-name"></span><br>
+                            <strong>Expire le :</strong> <span id="code-expiration"></span>
+                        </div>
+                        <button class="btn btn-outline-primary" onclick="copyCode()">
+                            <i class="ph ph-copy"></i> Copier le code
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des codes -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white border-bottom">
+                <h5 class="mb-0">📋 Historique des codes</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Code</th>
+                                <th>Client</th>
+                                <th>Statut</th>
+                                <th>Généré le</th>
+                                <th>Expire le</th>
+                                <th>Généré par</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="codes-tbody">
+                            <!-- Rempli dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/phosphor-icon.js"></script>
+    <script src="assets/js/boostrap.bundle.min.js"></script>
+    <script>
+    console.log('✅ Début du chargement du script inline');
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+        console.log('🚀 DOMContentLoaded déclenché');
+        
+        const token = localStorage.getItem('token');
+        console.log('🔑 Token:', !!token);
+        
+        const select = document.getElementById('client-select');
+        console.log('📋 Select trouvé:', !!select);
+        
+        if (!select) {
+            console.error('❌ SELECT INTROUVABLE !');
+            return;
+        }
+        
+        try {
+            console.log('📡 Appel API...');
+            const response = await fetch('http://localhost:5000/api/admin/clients', {
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            console.log('📊 Status:', response.status);
+            const data = await response.json();
+            console.log('📦 Data:', data);
+            
+            if (data.clients) {
+                console.log('✅ Clients reçus:', data.clients.length);
+                
+                select.innerHTML = '<option value="">-- Sélectionner un client --</option>';
+                
+                data.clients.forEach(client => {
+                    const option = document.createElement('option');
+                    option.value = client.id;
+                    option.textContent = `${client.nom} (${client.email})`;
+                    select.appendChild(option);
+                    console.log('➕ Client ajouté:', client.nom);
+                });
+                
+                console.log('✅ SELECT REMPLI !');
+            }
+        } catch (error) {
+            console.error('❌ Erreur:', error);
+        }
+    });
+    
+    console.log('✅ Fin du script inline');
+</script>
+</body>
+</html>

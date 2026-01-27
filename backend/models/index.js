@@ -31,6 +31,7 @@ const sequelize = new Sequelize(
 const User = require('./User');
 const Transaction = require('./Transaction');
 const Beneficiaire = require('./Beneficiaire');
+const TransactionCode = require('./TransactionCode'); // ✅ LIGNE AJOUTÉE
 
 // ========================================
 // 🔗 DÉFINITION DES RELATIONS
@@ -67,6 +68,35 @@ Beneficiaire.belongsTo(User, {
 });
 
 // ========================================
+// ✅ NOUVELLES RELATIONS : TransactionCode
+// ========================================
+
+// Un utilisateur peut avoir plusieurs codes
+User.hasMany(TransactionCode, { 
+  foreignKey: 'userId', 
+  as: 'codes',
+  onDelete: 'CASCADE'
+});
+
+// Un code appartient à un utilisateur (client)
+TransactionCode.belongsTo(User, { 
+  foreignKey: 'userId', 
+  as: 'client'
+});
+
+// Un code est généré par un administrateur
+TransactionCode.belongsTo(User, { 
+  foreignKey: 'generePar', 
+  as: 'administrateur'
+});
+
+// Un code peut être lié à une transaction (si utilisé)
+TransactionCode.belongsTo(Transaction, { 
+  foreignKey: 'transactionId', 
+  as: 'transaction'
+});
+
+// ========================================
 // 📤 EXPORT
 // ========================================
 
@@ -74,5 +104,6 @@ module.exports = {
   sequelize,
   User,
   Transaction,
-  Beneficiaire
+  Beneficiaire,
+  TransactionCode // ✅ LIGNE AJOUTÉE
 };
