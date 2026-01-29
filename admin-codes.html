@@ -113,57 +113,6 @@
     <script src="assets/js/jquery-3.7.1.min.js"></script>
     <script src="assets/js/phosphor-icon.js"></script>
     <script src="assets/js/boostrap.bundle.min.js"></script>
-    <script>
-    console.log('✅ Début du chargement du script inline');
-    
-    document.addEventListener('DOMContentLoaded', async () => {
-        console.log('🚀 DOMContentLoaded déclenché');
-        
-        const token = localStorage.getItem('token');
-        console.log('🔑 Token:', !!token);
-        
-        const select = document.getElementById('client-select');
-        console.log('📋 Select trouvé:', !!select);
-        
-        if (!select) {
-            console.error('❌ SELECT INTROUVABLE !');
-            return;
-        }
-        
-        try {
-            console.log('📡 Appel API...');
-            const response = await fetch('http://localhost:5000/api/admin/clients', {
-                headers: {
-                    'Authorization': 'Bearer ' + token,
-                    'Content-Type': 'application/json'
-                }
-            });
-            
-            console.log('📊 Status:', response.status);
-            const data = await response.json();
-            console.log('📦 Data:', data);
-            
-            if (data.clients) {
-                console.log('✅ Clients reçus:', data.clients.length);
-                
-                select.innerHTML = '<option value="">-- Sélectionner un client --</option>';
-                
-                data.clients.forEach(client => {
-                    const option = document.createElement('option');
-                    option.value = client.id;
-                    option.textContent = `${client.nom} (${client.email})`;
-                    select.appendChild(option);
-                    console.log('➕ Client ajouté:', client.nom);
-                });
-                
-                console.log('✅ SELECT REMPLI !');
-            }
-        } catch (error) {
-            console.error('❌ Erreur:', error);
-        }
-    });
-    
-    console.log('✅ Fin du script inline');
-</script>
+    <script src="assets/js/admin-codes.js"></script>
 </body>
 </html>

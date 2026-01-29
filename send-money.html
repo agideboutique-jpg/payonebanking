@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <!-- Main css -->
     <link rel="stylesheet" href="assets/css/main.css">
+
 </head>
 
 <body class="position-relative">
@@ -738,7 +739,9 @@
                                         </a>
                                     </div>
 
-                                    <!-- FORMULAIRE DE VIREMENT -->
+                                    <!-- ========================================== -->
+                                    <!-- ÉTAPE 1 : FORMULAIRE DÉTAILS DU VIREMENT -->
+                                    <!-- ========================================== -->
                                     <form id="transfer-form" class="bg-neutral-10 tw-px-8 tw-py-8 rounded-3">
 
                                         <span
@@ -800,17 +803,17 @@
                                                     <ul class="tw-text-3 text-dark-500 mb-0 ps-3">
                                                         <li>Le virement est instantané</li>
                                                         <li>Aucuns frais ne sont appliqués</li>
-                                                        <li>Seuls les bénéficiaires validés apparaissent</li>
+                                                        <li>Un code OTP sera demandé pour valider</li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <!-- Bouton d'envoi -->
+                                        <!-- Bouton CONTINUER -->
                                         <div class="position-relative w-100 z-1">
                                             <button type="submit"
                                                 class="text-center fw-semibold tw-text-lg text-white bg-base-two-600 rounded-3 w-100 tw-py-3 hover-bg-base-two-700 tw-duration-300">
-                                                💸 ENVOYER LE VIREMENT
+                                                <i class="ph ph-arrow-right"></i> CONTINUER
                                             </button>
                                         </div>
 
@@ -827,6 +830,123 @@
                                         </div>
 
                                     </form>
+
+                                    <!-- ========================================== -->
+                                    <!-- ANIMATION DE CHARGEMENT -->
+                                    <!-- ========================================== -->
+                                    <div id="loading-animation" class="bg-neutral-10 tw-px-8 tw-py-8 rounded-3 text-center" style="display: none;">
+                                        <div class="tw-mb-6">
+                                            <div class="spinner-border text-primary-600" role="status" style="width: 4rem; height: 4rem;">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <h5 class="fw-semibold text-dark-600 tw-mb-4" id="loading-title">Préparation du virement...</h5>
+                                        
+                                        <div class="bg-white tw-px-6 tw-py-4 rounded-3 tw-mb-4">
+                                            <p class="fw-semibold text-primary-600 tw-mb-3 tw-text-5" id="loading-message">
+                                                Vérification du compte...
+                                            </p>
+                                            <div class="progress" style="height: 8px;">
+                                                <div id="loading-progress" class="progress-bar bg-primary-600 progress-bar-striped progress-bar-animated" 
+                                                     role="progressbar" 
+                                                     style="width: 0%"
+                                                     aria-valuenow="0" 
+                                                     aria-valuemin="0" 
+                                                     aria-valuemax="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-muted tw-text-3">
+                                            <i class="ph ph-lock-key"></i> Connexion sécurisée SSL 256-bit
+                                        </div>
+                                    </div>
+
+                                    <!-- ========================================== -->
+                                    <!-- ÉTAPE 2 : CODE OTP -->
+                                    <!-- ========================================== -->
+                                    <div id="transfer-form-step2" class="bg-neutral-10 tw-px-8 tw-py-8 rounded-3" style="display: none;">
+                                        
+                                        <span class="fw-semibold tw-text-xl text-dark-600 justify-content-center d-flex tw-mb-2">
+                                            <i class="ph ph-shield-check text-primary-600"></i> Code de sécurité
+                                        </span>
+                                        <span class="bg-base-two-10 w-100 tw-h-px tw-mb-6"></span>
+
+                                        <!-- Récapitulatif -->
+                                        <div class="bg-white tw-px-6 tw-py-4 rounded-3 tw-mb-6">
+                                            <h6 class="fw-semibold text-dark-600 tw-mb-3">Récapitulatif de la transaction</h6>
+                                            
+                                            <div class="d-flex justify-content-between tw-mb-2">
+                                                <span class="text-muted tw-text-4">Bénéficiaire :</span>
+                                                <span class="fw-semibold tw-text-4" id="recap-beneficiaire">-</span>
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-between tw-mb-2">
+                                                <span class="text-muted tw-text-4">Montant :</span>
+                                                <span class="fw-semibold tw-text-4 text-primary-600" id="recap-montant">-</span>
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-between">
+                                                <span class="text-muted tw-text-4">Description :</span>
+                                                <span class="fw-normal tw-text-4" id="recap-description">-</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Champ Code OTP -->
+                                        <div class="tw-mb-6">
+                                            <label for="code-otp" class="fw-semibold tw-text-4 text-dark-600 tw-mb-3 d-block text-center">
+                                                <i class="ph ph-key text-primary-600"></i> Entrez votre code de transaction (OTP)
+                                            </label>
+                                            
+                                            <div class="position-relative tw-mb-3">
+                                                <input 
+                                                    type="text" 
+                                                    id="code-otp" 
+                                                    name="codeOtp"
+                                                    maxlength="6" 
+                                                    pattern="[0-9]{6}"
+                                                    placeholder="• • • • • •"
+                                                    class="fw-bold tw-py-4 tw-px-4 border-2 border-primary-600 rounded-3 w-100 text-center"
+                                                    style="letter-spacing: 1rem; font-size: 2rem; background-color: #f8f9fa;"
+                                                    required
+                                                >
+                                                <i class="ph ph-shield-check position-absolute tw-end-3 top-50 translate-middle-y text-success" 
+                                                   id="otp-valid-icon" 
+                                                   style="display: none; font-size: 1.5rem;"></i>
+                                            </div>
+                                            
+                                            <small class="text-muted tw-text-3 d-block text-center">
+                                                <i class="ph ph-info"></i> 
+                                                Demandez un code à votre administrateur si vous n'en avez pas
+                                            </small>
+                                        </div>
+
+                                        <!-- Alert de sécurité -->
+                                        <div class="alert alert-warning tw-mb-6 tw-p-4 rounded-3">
+                                            <div class="d-flex align-items-start tw-gap-3">
+                                                <i class="ph ph-warning text-warning tw-text-6"></i>
+                                                <div>
+                                                    <p class="fw-semibold tw-text-4 mb-1">⚠️ Code à usage unique</p>
+                                                    <p class="tw-text-3 mb-0">Ce code ne peut être utilisé qu'une seule fois. Après validation, il sera automatiquement invalidé.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Boutons d'action -->
+                                        <div class="d-flex tw-gap-3">
+                                            <button type="button" id="btn-back-step1"
+                                                class="text-center fw-semibold tw-text-lg text-dark-600 bg-white border border-neutral-05 rounded-3 tw-py-3 tw-px-6 hover-bg-neutral-10 tw-duration-300">
+                                                <i class="ph ph-arrow-left"></i> Retour
+                                            </button>
+                                            
+                                            <button type="button" id="btn-validate-transfer"
+                                                class="text-center fw-semibold tw-text-lg text-white bg-primary-600 rounded-3 w-100 tw-py-3 hover-bg-primary-700 tw-duration-300">
+                                                <i class="ph ph-check-circle"></i> VALIDER LE VIREMENT
+                                            </button>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-confirm" role="tabpanel"

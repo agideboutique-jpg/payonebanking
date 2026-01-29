@@ -1,0 +1,207 @@
+/* ========================================
+   💳 STYLES CARTE DE CRÉDIT - PAYONE BANKING
+   ======================================== */
+
+/* Container de la carte */
+.credit-card {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 25px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.credit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+}
+
+/* Effets de fond */
+.credit-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Chip de la carte */
+.credit-card-chip {
+    width: 50px;
+    height: 40px;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    border-radius: 8px;
+    position: absolute;
+    top: 80px;
+    left: 25px;
+    overflow: hidden;
+}
+
+.credit-card-chip::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+    border-radius: 4px;
+}
+
+.credit-card-chip::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.1) 2px,
+        rgba(0,0,0,0.1) 4px
+    );
+}
+
+/* Logo sans contact */
+.contactless-logo {
+    position: absolute;
+    top: 85px;
+    right: 25px;
+    font-size: 24px;
+    opacity: 0.8;
+}
+
+/* Nom du titulaire */
+.card-holder-name {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    z-index: 10;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Label du solde */
+.card-balance-label {
+    position: absolute;
+    bottom: 70px;
+    left: 25px;
+    font-size: 12px;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 10;
+}
+
+/* Montant du solde */
+.card-balance-amount {
+    position: absolute;
+    bottom: 35px;
+    left: 25px;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    z-index: 10;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+/* Logo de la banque */
+.card-bank-logo {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.9;
+    z-index: 10;
+}
+
+/* Pattern de fond */
+.card-pattern {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+/* Variantes de couleurs */
+.credit-card.purple {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.credit-card.blue {
+    background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+}
+
+.credit-card.green {
+    background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+}
+
+.credit-card.orange {
+    background: linear-gradient(135deg, #f46b45 0%, #eea849 100%);
+}
+
+.credit-card.dark {
+    background: linear-gradient(135deg, #232526 0%, #414345 100%);
+}
+
+.credit-card.gold {
+    background: linear-gradient(135deg, #b79891 0%, #94716b 100%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .credit-card {
+        max-width: 100%;
+        height: 220px;
+    }
+    
+    .card-balance-amount {
+        font-size: 28px;
+    }
+    
+    .card-holder-name {
+        font-size: 14px;
+    }
+}
+
+/* Animation d'apparition */
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.credit-card {
+    animation: cardAppear 0.6s ease-out;
+}

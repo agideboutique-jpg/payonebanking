@@ -26,12 +26,11 @@ const sequelize = new Sequelize(
 // ========================================
 // 📥 IMPORT DES MODÈLES
 // ========================================
-// Les modèles sont déjà initialisés avec sequelize.define() dans leurs fichiers respectifs
-
 const User = require('./User');
 const Transaction = require('./Transaction');
 const Beneficiaire = require('./Beneficiaire');
-const TransactionCode = require('./TransactionCode'); // ✅ LIGNE AJOUTÉE
+const TransactionCode = require('./TransactionCode');
+const IdentityVerification = require('./IdentityVerification'); // ✅ AJOUTÉ
 
 // ========================================
 // 🔗 DÉFINITION DES RELATIONS
@@ -49,7 +48,7 @@ Transaction.belongsTo(User, {
   as: 'user'
 });
 
-// Relations User ↔ Beneficiaire (client qui crée le bénéficiaire)
+// Relations User ↔ Beneficiaire
 User.hasMany(Beneficiaire, { 
   foreignKey: 'userId', 
   as: 'beneficiaires',
@@ -61,39 +60,54 @@ Beneficiaire.belongsTo(User, {
   as: 'user'
 });
 
-// Relation Beneficiaire ↔ User (admin validateur)
 Beneficiaire.belongsTo(User, { 
   foreignKey: 'validePar', 
   as: 'validateur'
 });
 
-// ========================================
-// ✅ NOUVELLES RELATIONS : TransactionCode
-// ========================================
-
-// Un utilisateur peut avoir plusieurs codes
+// Relations TransactionCode
 User.hasMany(TransactionCode, { 
   foreignKey: 'userId', 
   as: 'codes',
   onDelete: 'CASCADE'
 });
 
-// Un code appartient à un utilisateur (client)
 TransactionCode.belongsTo(User, { 
   foreignKey: 'userId', 
   as: 'client'
 });
 
-// Un code est généré par un administrateur
 TransactionCode.belongsTo(User, { 
   foreignKey: 'generePar', 
   as: 'administrateur'
 });
 
-// Un code peut être lié à une transaction (si utilisé)
 TransactionCode.belongsTo(Transaction, { 
   foreignKey: 'transactionId', 
   as: 'transaction'
+});
+
+// ========================================
+// ✅ NOUVELLES RELATIONS : IdentityVerification
+// ========================================
+
+// Un utilisateur peut avoir plusieurs vérifications d'identité
+User.hasMany(IdentityVerification, { 
+  foreignKey: 'userId', 
+  as: 'identityVerifications',
+  onDelete: 'CASCADE'
+});
+
+// Une vérification appartient à un utilisateur
+IdentityVerification.belongsTo(User, { 
+  foreignKey: 'userId', 
+  as: 'user'
+});
+
+// Une vérification est validée par un admin
+IdentityVerification.belongsTo(User, { 
+  foreignKey: 'validePar', 
+  as: 'validateur'
 });
 
 // ========================================
@@ -105,5 +119,6 @@ module.exports = {
   User,
   Transaction,
   Beneficiaire,
-  TransactionCode // ✅ LIGNE AJOUTÉE
+  TransactionCode,
+  IdentityVerification // ✅ AJOUTÉ
 };

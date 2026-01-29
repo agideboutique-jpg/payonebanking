@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="PayOne HTML Template">
+    <meta name="keywords" content="PayOne HTML Template">
+    <meta name="robots" content="INDEX,FOLLOW">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ✅ PROTECTION CLIENT - DOIT ÊTRE EN PREMIER -->
+    <script src="/assets/js/protect-client.js"></script>
+    <!-- Title -->
+    <title>Vérification d'Identité - PayOne Banking</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+    <!-- slider -->
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <!-- magnfic popup -->
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <!-- aos animation -->
+    <link rel="stylesheet" href="assets/css/aos-animation.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    
+    <style>
+        .upload-zone {
+            border: 3px dashed #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .upload-zone:hover {
+            border-color: #0d6efd;
+            background-color: #f8f9fa;
+        }
+        
+        .upload-zone.has-file {
+            border-color: #198754;
+            background-color: #d1e7dd;
+        }
+        
+        /* Zone désactivée */
+        .upload-zone.disabled {
+            border-color: #ccc;
+            background-color: #e9ecef;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .upload-zone.disabled:hover {
+            border-color: #ccc;
+            background-color: #e9ecef;
+        }
+        
+        .upload-zone input[type="file"] {
+            display: none;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+        
+        .upload-zone.has-file .upload-icon {
+            color: #198754;
+        }
+        
+        .upload-zone.disabled .upload-icon {
+            color: #999;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .doc-type-card {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .doc-type-card:hover {
+            border-color: #0d6efd;
+            background-color: #f8f9fa;
+        }
+        
+        .doc-type-card.selected {
+            border-color: #0d6efd;
+            background-color: #e7f1ff;
+        }
+        
+        .remove-file {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: none;
+        }
+        
+        .upload-zone.has-file .remove-file {
+            display: block;
+        }
+        
+        .status-card {
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid;
+        }
+        
+        .status-en_attente {
+            background-color: #fff3cd;
+            border-color: #ffc107;
+        }
+        
+        .status-valide {
+            background-color: #d1e7dd;
+            border-color: #198754;
+        }
+        
+        .status-refuse {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        /* Badge de verrouillage */
+        .lock-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: none;
+            z-index: 10;
+        }
+        
+        .upload-zone.disabled .lock-badge {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="position-relative">
+
+    <!--==================== Preloader Start ====================-->
+    <div class="preloder">
+        <div class="position-relative tw-w-76-px tw-h-76-px d-flex justify-content-center align-items-center">
+            <img src="assets/images/icon/preloder-img1.png" alt="Img" class="tw-w-8">
+            <div class="preloder__exchange__img w-100 h-100">
+                <img src="assets/images/icon/preloder-img2.png" alt="Img" class="w-100 h-100 animation-rotation">
+            </div>
+        </div>
+    </div>
+    <!--==================== Preloader End ====================-->
+
+    <!--==================== Overlay Start ====================-->
+    <div class="overlay"></div>
+    <!--==================== Overlay End ====================-->
+
+    <!--==================== Sidebar Overlay End ====================-->
+    <div class="side-overlay"></div>
+    <!--==================== Sidebar Overlay End ====================-->
+
+    <!-- Custom Toast Message start -->
+    <div id="toast-container"></div>
+    <!-- Custom Toast Message End -->
+
+    <!-- ==================== Scroll to Top End Here ==================== -->
+    <div class="progress-wrap cursor-big">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+    <!-- ==================== Scroll to Top End Here ==================== -->
+
+    <!-- Custom Cursor Start -->
+    <div class="cursor"></div>
+    <span class="dot"></span>
+    <!-- Custom Cursor End -->
+
+    <!-- ===================== my profile header section start ====================== -->
+    <div class="header bg-white tw-py-505">
+        <div class="container">
+            <div class="d-flex align-items-center tw-gap-6 justify-content-between">
+                <div class="d-flex align-items-center w-100 tw-gap-6 max-w-885-px">
+                    <a href="index.html">
+                        <img src="assets/images/logo/logo2.png" alt="Image">
+                    </a>
+                    <form action="#" class="position-relative max-w-664px w-100 d-lg-block d-none ">
+                        <input type="text" placeholder="Search"
+                            class="tw-pe-10 tw-ps-6 tw-py-4 bg-neutral-10 w-100 focus-visible-border-main-600 border-0 tw-text-4 text-dark-500 fw-normal rounded-pill">
+                        <button
+                            class="tw-text-6 text-dark-600 position-absolute tw-end-1 tw-block-start-50 top-50 translate-middle">
+                            <i class="ph ph-magnifying-glass"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="d-flex align-items-center tw-gap-6 ">
+                    <select class="fw-semibold tw-text-4 text-dark-600 border-0 focus-border-none d-sm-block d-none">
+                        <option value="1">ENG</option>
+                        <option value="1">Spanish</option>
+                        <option value="1">Bangla</option>
+                        <option value="1">German</option>
+                        <option value="1">Chinese</option>
+                        <option value="1">Korean</option>
+                    </select>
+                    
+                    <!-- User Profile Start -->
+                    <div class="dropdown">
+                        <button class="position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="position-relative tw-w-15 tw-h-15 flex-shrink-0">
+                                <img src="assets/images/thumbs/my-profile-img1.png" alt="Image" class="">
+                            </span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu--lg border-0 bg-transparent p-0">
+                            <div class="card border border-gray-100 tw-rounded-xl box-shadow-custom">
+                                <div class="card-body">
+                                    <ul class="tw-h-270-px overflow-y-auto scroll-sm pe-4">
+                                        <li class="tw-pt-2 border-top border-gray-100">
+                                            <a href="javascript:void(0)"
+                                                class="logout-btn tw-py-3 tw-text-4 tw-px-5 hover-bg-danger-50 text-neutral-300 hover-text-danger-600 tw-duration-500 tw-rounded-md d-flex align-items-center tw-gap-2 fw-semibold tw-text-4">
+                                                <span class="tw-text-2xl text-danger-600 d-flex"><i
+                                                        class="ph ph-sign-out"></i></span>
+                                                <span class="text">Déconnexion</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- User Profile End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tw-h-333-px bg-base-two-600 position-relative z-1">
+        <img src="assets/images/shape/my-profile-shape-1.png" alt="Image"
+            class="position-absolute z-n1 tw-block-end-0 tw-start-0">
+        <img src="assets/images/shape/my-profile-shape-2.png" alt="Image"
+            class="position-absolute z-n1 tw-block-end-0 tw-end-0">
+        <img src="assets/images/shape/circle-shape-img1.png" alt="Image"
+            class="position-absolute tw-start-100-px tw-block-start-100-px animation-rotation__two">
+        <img src="assets/images/shape/banner-two-shape5.png" alt="Image"
+            class="position-absolute tw-end-60-px tw-block-end-75-px animation-Updowm__two">
+    </div>
+    <!-- ===================== my profile header section end ====================== -->
+
+    <!-- ===================== account section start ====================== -->
+    <section class="bg-neutral-10 z-1">
+        <div class="container">
+            <div class="dashboard-item tw-pb-8 d-xl-flex tw-gap-6 w-100 tw-mt--193px">
+                
+                <!-- Sidebar -->
+                <div class="dashboard-slidebar tw-w-306-px bg-white tw-rounded-xl">
+                    <div class="tw-pt-12 tw-px-12 position-relative">
+                        <button type="button"
+                            class="dashboard-close-button tw-text-xl tw-w-8 tw-h-8 border-neutral-200 rounded-circle hover-bg-base-two-600 hover-text-white tw-duration-500 d-flex align-items-center justify-content-center position-absolute z-1 tw-block-start-0 tw-mt-5 tw-start-24-px d-xl-none d-block">
+                            <i class="ph-bold ph-x"></i>
+                        </button>
+                        <div class="position-relative tw-mb-8">
+                            <div class="avatar-upload">
+                                <div class="avatar-preview border-base-two-600 border rounded-circle tw-px-2 tw-py-2">
+                                    <div id="imagePreview"
+                                        style="background-image: url(assets/images/thumbs/my-profile-img-2.png);">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center justify-content-center">
+                            <h4 class="fw-normal text-dark-600 tw-mb-2 user-name">
+                                Chargement...
+                            </h4>
+                            <span class="fw-normal tw-text-4 text-dark-500 user-email">
+                                email@example.com
+                            </span>
+                        </div>
+                    </div>
+                    <div class="tw-px-6 tw-pb-6">
+                        <span class="border-bottom-neutral-05 w-100 tw-mb-8 tw-mt-8"></span>
+                        <ul class="header-nav-menu__item">
+                            <li class="header-nav-submenu__item tw-mb-4">
+                                <a href="dashboard.html"
+                                    class="header-nav-submenu__link fw-normal tw-text-lg text-dark-600 d-flex align-items-center tw-gap-2 hover-text-white bg-neutral-10 tw-px-3 tw-py-3 rounded-3 hover-bg-base-two-600 tw-duration-400">
+                                    <span class="tw-text-6">
+                                        <i class="ph ph-house"></i>
+                                    </span>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="header-nav-submenu__item tw-mb-4">
+                                <a href="transactions.html"
+                                    class="header-nav-submenu__link fw-normal tw-text-lg text-dark-600 d-flex align-items-center tw-gap-2 hover-text-white bg-neutral-10 tw-px-3 tw-py-3 rounded-3 hover-bg-base-two-600 tw-duration-400">
+                                    <span class="tw-text-6">
+                                        <i class="ph ph-arrows-left-right"></i>
+                                    </span>
+                                    Transaction
+                                </a>
+                            </li>
+                            <li class="header-nav-submenu__item tw-mb-4">
+                                <a href="beneficiaires.html"
+                                    class="header-nav-submenu__link fw-normal tw-text-lg text-dark-600 d-flex align-items-center tw-gap-2 hover-text-white bg-neutral-10 tw-px-3 tw-py-3 rounded-3 hover-bg-base-two-600 tw-duration-400">
+                                    <span class="tw-text-6">
+                                        <i class="ph ph-users-three"></i>
+                                    </span>
+                                    Mes Bénéficiaires
+                                </a>
+                            </li>
+                            <li class="header-nav-submenu__item tw-mb-4">
+                                <a href="send-money.html"
+                                    class="header-nav-submenu__link fw-normal tw-text-lg text-dark-600 d-flex align-items-center tw-gap-2 hover-text-white bg-neutral-10 tw-px-3 tw-py-3 rounded-3 hover-bg-base-two-600 tw-duration-400">
+                                    <span class="tw-text-6">
+                                        <i class="ph ph-paper-plane-tilt"></i>
+                                    </span>
+                                    Send Money
+                                </a>
+                            </li>
+                            <li class="border-bottom-neutral-05 w-100 tw-mb-8 tw-mt-8"></li>
+                            <li class="header-nav-submenu__item tw-mb-4 activePage">
+                                <a href="verify-identity.html"
+                                    class="header-nav-submenu__link fw-normal tw-text-lg text-dark-600 d-flex align-items-center tw-gap-2 hover-text-white bg-neutral-10 tw-px-3 tw-py-3 rounded-3 hover-bg-base-two-600 tw-duration-400">
+                                    <span class="tw-text-6">
+                                        <i class="ph ph-shield-check"></i>
+                                    </span>
+                                    Vérification d'identité
+                                </a>
+                            </li>
+                            <li class="header-nav-submenu__item tw-mb-4">
+                                <a href="my-profile.html"
+                                    class="header-nav-submenu__link fw-normal tw-text-lg text-dark-600 d-flex align-items-center tw-gap-2 hover-text-white bg-neutral-10 tw-px-3 tw-py-3 rounded-3 hover-bg-base-two-600 tw-duration-400">
+                                    <span class="tw-text-6">
+                                        <i class="ph ph-user"></i>
+                                    </span>
+                                    Account
+                                </a>
+                            </li>
+                            <li class="header-nav-submenu__item">
+                                <a href="javascript:void(0)"
+                                    class="logout-btn header-nav-submenu__link fw-normal tw-text-lg text-dark-600 d-flex align-items-center tw-gap-2 hover-text-white bg-neutral-10 tw-px-3 tw-py-3 rounded-3 hover-bg-base-two-600 tw-duration-400">
+                                    <span class="tw-text-6">
+                                        <i class="ph ph-sign-out"></i>
+                                    </span>
+                                    Déconnexion
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="flex-grow-1">
+                    <div class="bg-white tw-px-10 rounded-3 tw-py-8 w-100">
+                        <button type="button"
+                            class="dashboard-toggle-button text-base-two-600 tw-text-8 tw-mb-6 d-xl-none d-block tw-m-l-end">
+                            <i class="ph-bold ph-list"></i>
+                        </button>
+
+                        <!-- En-tête -->
+                        <div class="text-center tw-mb-10">
+                            <span class="text-base-two-600 tw-text-15 tw-mb-5 d-block">
+                                <i class="ph-fill ph-shield-check"></i>
+                            </span>
+                            <h2 class="fw-normal text-dark-600 tw-mb-2">Vérification d'Identité</h2>
+                            <p class="text-dark-500 fw-normal tw-text-lg">Sécurisez votre compte en vérifiant votre identité</p>
+                        </div>
+
+                        <!-- Zone de statut (cachée par défaut) -->
+                        <div id="statusSection" style="display: none;"></div>
+
+                        <!-- Information importante -->
+                        <div class="bg-primary-05 tw-px-6 tw-py-6 rounded-3 tw-mb-8">
+                            <h5 class="text-dark-600 fw-semibold tw-mb-4">
+                                <i class="ph ph-info text-primary-600"></i> Informations importantes
+                            </h5>
+                            <ul class="text-dark-500 tw-text-4 mb-0">
+                                <li>Vos documents doivent être <strong>lisibles et non flous</strong></li>
+                                <li>Les documents doivent être <strong>en couleur</strong></li>
+                                <li>Formats acceptés : <strong>JPG, JPEG, PNG, WEBP</strong></li>
+                                <li>Taille maximale par fichier : <strong>5 MB</strong></li>
+                                <li><strong>⚠️ La photo de profil doit être prise en direct avec votre caméra</strong></li>
+                                <li>Votre identité sera vérifiée sous <strong>24-48h</strong></li>
+                            </ul>
+                        </div>
+
+                        <!-- Formulaire de soumission -->
+                        <form id="verificationForm" class="bg-neutral-10 tw-px-8 tw-py-8 rounded-3" style="display: none;">
+                            
+                            <!-- Sélection du type de document -->
+                            <h5 class="fw-semibold text-dark-600 tw-mb-4">1. Sélectionnez votre type de document</h5>
+                            <div class="row g-3 tw-mb-8">
+                                <div class="col-md-4">
+                                    <div class="doc-type-card selected" data-type="carte_identite">
+                                        <i class="ph ph-identification-card tw-text-9 text-primary-600 d-block tw-mb-3"></i>
+                                        <h6 class="fw-semibold text-dark-600">Carte d'Identité</h6>
+                                        <small class="text-dark-500">Recto + Verso</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="doc-type-card" data-type="passeport">
+                                        <i class="ph ph-airplane-takeoff tw-text-9 text-primary-600 d-block tw-mb-3"></i>
+                                        <h6 class="fw-semibold text-dark-600">Passeport</h6>
+                                        <small class="text-dark-500">Page d'identité</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="doc-type-card" data-type="permis_conduire">
+                                        <i class="ph ph-car tw-text-9 text-primary-600 d-block tw-mb-3"></i>
+                                        <h6 class="fw-semibold text-dark-600">Permis de Conduire</h6>
+                                        <small class="text-dark-500">Recto + Verso</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="typeDocument" name="typeDocument" value="carte_identite" required>
+
+                            <!-- Upload Recto -->
+                            <h5 class="fw-semibold text-dark-600 tw-mb-4" id="rectoLabel">2. Document (Recto)</h5>
+                            <div class="upload-zone" id="rectoZone">
+                                <button type="button" class="remove-file" id="removeRecto">
+                                    <i class="ph ph-x"></i>
+                                </button>
+                                <i class="ph ph-cloud-arrow-up upload-icon"></i>
+                                <h5 class="text-dark-600 fw-semibold">Cliquez pour télécharger</h5>
+                                <p class="text-dark-500 mb-0">ou glissez-déposez votre document ici</p>
+                                <img id="rectoPreview" class="preview-image" alt="Aperçu">
+                                <input type="file" id="documentRecto" name="documentRecto" accept="image/*" required>
+                            </div>
+
+                            <!-- Upload Verso (conditionnel) -->
+                            <div id="versoSection">
+                                <h5 class="fw-semibold text-dark-600 tw-mb-4">3. Document (Verso)</h5>
+                                <div class="upload-zone" id="versoZone">
+                                    <button type="button" class="remove-file" id="removeVerso">
+                                        <i class="ph ph-x"></i>
+                                    </button>
+                                    <i class="ph ph-cloud-arrow-up upload-icon"></i>
+                                    <h5 class="text-dark-600 fw-semibold">Cliquez pour télécharger</h5>
+                                    <p class="text-dark-500 mb-0">ou glissez-déposez votre document ici</p>
+                                    <img id="versoPreview" class="preview-image" alt="Aperçu">
+                                    <input type="file" id="documentVerso" name="documentVerso" accept="image/*" required>
+                                </div>
+                            </div>
+
+                            <!-- Upload Photo de profil -->
+                            <h5 class="fw-semibold text-dark-600 tw-mb-3" id="photoLabel">4. Photo de Profil 📸</h5>
+                            <div class="bg-warning bg-opacity-10 tw-px-4 tw-py-3 rounded-3 tw-mb-4 border border-warning">
+                                <div class="d-flex align-items-center tw-gap-3">
+                                    <i class="ph ph-camera tw-text-6 text-warning"></i>
+                                    <div>
+                                        <strong class="text-dark-600 d-block">⚠️ Prise de vue en direct obligatoire</strong>
+                                        <small class="text-dark-500">Vous devez prendre votre photo avec la caméra de votre appareil. Les photos de la galerie ne sont pas acceptées.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="upload-zone disabled" id="photoZone">
+                                <div class="lock-badge">
+                                    <i class="ph ph-lock"></i> Uploadez d'abord vos documents
+                                </div>
+                                <button type="button" class="remove-file" id="removePhoto">
+                                    <i class="ph ph-x"></i>
+                                </button>
+                                <i class="ph ph-camera upload-icon"></i>
+                                <h5 class="text-dark-600 fw-semibold">Prendre une photo avec la caméra</h5>
+                                <p class="text-dark-500 mb-0">Photo de face, fond neutre recommandé</p>
+                                <img id="photoPreview" class="preview-image" alt="Aperçu">
+                                <!-- ✅ CAPTURE: obligatoire, ACCEPT: seulement image -->
+                                <input type="file" id="photoProfile" name="photoProfile" accept="image/*" capture="user" required disabled>
+                            </div>
+
+                            <!-- Bouton de soumission -->
+                            <div class="position-relative w-100 z-1 tw-mt-8">
+                                <button type="submit" 
+                                    class="text-center fw-semibold tw-text-lg text-white bg-base-two-600 rounded-3 w-100 tw-py-3 hover-bg-base-two-700 tw-duration-300" 
+                                    id="submitBtn" 
+                                    disabled>
+                                    <i class="ph ph-paper-plane"></i> Soumettre mes documents
+                                </button>
+                            </div>
+
+                        </form>
+
+                        <!-- Message de chargement -->
+                        <div id="loadingMessage" class="text-center tw-py-10" style="display: none;">
+                            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                                <span class="visually-hidden">Chargement...</span>
+                            </div>
+                            <p class="mt-3 text-dark-500">Chargement du statut...</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- ===================== account section end ====================== -->
+
+    <!-- =========================== footer section start ============================= -->
+    <div class="tw-py-6">
+        <div class="container">
+            <div class="d-flex align-items-center tw-gap-6 justify-content-between flex-wrap">
+                <p class="text-dark-600 fw-normal tw-text-lg ">Copyright ©2025 payone Designed By
+                    <span class="text-primary-600">wowtheme7</span>
+                </p>
+                <div class="d-flex align-items-center tw-gap-6 flex-wrap">
+                    <a href="javascript:void(0)" class="fw-normal tw-text-lg text-dark-500">
+                        Privacy policy
+                    </a>
+                    <a href="javascript:void(0)" class="fw-normal tw-text-lg text-dark-500">
+                        Terms of condition
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- =========================== footer section end ============================= -->
+
+    <!-- Jquery js -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <!-- phosphor Js -->
+    <script src="assets/js/phosphor-icon.js"></script>
+    <!-- Bootstrap Bundle Js -->
+    <script src="assets/js/boostrap.bundle.min.js"></script>
+    <!-- GSAP js -->
+    <script src="assets/js/gsap.min.js"></script>
+    <!-- SplitText -->
+    <script src="assets/js/SplitText.min.js"></script>
+    <!-- Scroll Trigger -->
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <!-- marquee js -->
+    <script src="assets/js/marquee-main.js"></script>
+    <!-- swper slider -->
+    <script src="assets/js/ScrollTrigger.min.js"></script>
+    <!-- ScrollSmoother -->
+    <script src="assets/js/ScrollSmoother.min.js"></script>
+    <!-- aos animation -->
+    <script src="assets/js/aos-animation.js"></script>
+    <!-- counter up -->
+    <script src="assets/js/counter-up.main.js"></script>
+    <!-- custom GSAP -->
+    <script src="assets/js/custom-gsap.js"></script>
+    <!-- magnific popup -->
+    <script src="assets/js/magific-popup.js"></script>
+    <!-- main js -->
+    <script src="assets/js/main.js"></script>
+    
+    <!-- Script de vérification d'identité -->
+    <script src="/assets/js/identity-client.js"></script>
+
+</body>
+
+</html>

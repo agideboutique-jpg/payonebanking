@@ -82,16 +82,16 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', require('./routes/auth'));
 
 // Routes client
-    app.use('/api/client', require('./routes/client'));
+app.use('/api/client', require('./routes/client'));
 
 // Routes bénéficiaires
-    app.use('/api/beneficiaires', require('./routes/beneficiaire'));
+app.use('/api/beneficiaires', require('./routes/beneficiaire'));
 
 // ✅ AJOUTER CETTE LIGNE - Routes admin
 app.use('/api/admin', require('./routes/admin'));
 
-// Routes admin (à créer)
-// app.use('/api/admin', require('./routes/admin'));
+// Routes vérification d'identité
+app.use('/api/identity', require('./routes/identity'));
 
 // ========================================
 // GESTION DES ERREURS 404
@@ -127,11 +127,11 @@ const startServer = async () => {
     // 1. Connexion à la base de données
     await sequelize.authenticate();
     console.log('✅ MySQL connecté avec succès à la base', process.env.DB_NAME);
-    
+
     // 2. Synchroniser les modèles avec la base de données
     await sequelize.sync(); // Mode normal
     console.log('✅ Tables synchronisées');
-    
+
     // 3. Démarrage du serveur
     app.listen(PORT, () => {
       console.log('\n========================================');
@@ -149,7 +149,7 @@ const startServer = async () => {
       console.log('     - POST /api/auth/login');
       console.log('\n⏹️   Appuyez sur Ctrl+C pour arrêter\n');
     });
-    
+
   } catch (error) {
     console.error('❌ Erreur au démarrage du serveur:', error.message);
     process.exit(1);
