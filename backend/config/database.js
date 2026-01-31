@@ -2,6 +2,12 @@
 // CONFIGURATION DE LA CONNEXION À MYSQL
 // ========================================
 
+console.log("ENV DB_HOST =", process.env.DB_HOST);
+console.log("ENV DB_PORT =", process.env.DB_PORT);
+console.log("ENV DB_NAME =", process.env.DB_NAME);
+console.log("ENV MYSQL_URL =", process.env.MYSQL_URL);
+console.log("ENV DATABASE_URL =", process.env.DATABASE_URL);
+
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
