@@ -271,3 +271,142 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// ========================================
+// 💳 GESTION DE LA CARTE DE CRÉDIT
+// À AJOUTER DANS assets/js/client.js
+// ========================================
+
+/**
+ * Fonction globale pour mettre à jour la carte de crédit
+ * @param {string} userName - Nom de l'utilisateur
+ * @param {number} balance - Solde du compte
+ */
+function updateCreditCard(userName, balance) {
+    const cardHolderName = document.getElementById('cardHolderName');
+    const cardBalanceAmount = document.getElementById('cardBalanceAmount');
+    
+    if (cardHolderName) {
+        // Formater le nom en majuscules
+        cardHolderName.textContent = userName.toUpperCase();
+    }
+    
+    if (cardBalanceAmount) {
+        // Formater le solde avec séparateurs de milliers
+        const formattedBalance = new Intl.NumberFormat('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(balance);
+        
+        cardBalanceAmount.textContent = formattedBalance + ' €';
+    }
+}
+
+/**
+ * Animation du solde (effet compteur)
+ * @param {number} targetBalance - Solde cible
+ * @param {number} duration - Durée de l'animation en ms
+ */
+function animateCreditCardBalance(targetBalance, duration = 1000) {
+    const cardBalanceAmount = document.getElementById('cardBalanceAmount');
+    if (!cardBalanceAmount) return;
+    
+    const start = 0;
+    const startTime = Date.now();
+    
+    function updateAnimation() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function (ease-out)
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        
+        const currentValue = start + (targetBalance - start) * easeOut;
+        
+        const formattedBalance = new Intl.NumberFormat('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(currentValue);
+        
+        cardBalanceAmount.textContent = formattedBalance + ' €';
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateAnimation);
+        }
+    }
+    
+    requestAnimationFrame(updateAnimation);
+}
+
+/**
+ * Changer la couleur de la carte selon le solde
+ * @param {number} balance - Solde du compte
+ */
+function updateCreditCardColor(balance) {
+    const card = document.querySelector('.credit-card');
+    if (!card) return;
+    
+    // Retirer toutes les classes de couleur
+    card.classList.remove('purple', 'blue', 'green', 'orange', 'dark', 'gold');
+    
+    // Appliquer la couleur selon le solde
+    if (balance >= 10000) {
+        card.classList.add('gold'); // Or pour solde élevé
+    } else if (balance >= 5000) {
+        card.classList.add('blue'); // Bleu pour bon solde
+    } else if (balance >= 1000) {
+        card.classList.add('purple'); // Violet (défaut)
+    } else if (balance >= 100) {
+        card.classList.add('green'); // Vert pour solde moyen
+    } else if (balance > 0) {
+        card.classList.add('orange'); // Orange pour solde faible
+    } else {
+        card.classList.add('dark'); // Noir pour solde nul/négatif
+    }
+}
+
+// ========================================
+// EXEMPLE D'UTILISATION DANS loadUserProfile()
+// ========================================
+
+
+async function loadUserProfile() {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:5000/api/client/profile', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) throw new Error('Erreur chargement profil');
+
+        const data = await response.json();
+        const user = data.user;
+
+        // Mettre à jour les éléments existants
+        document.querySelectorAll('.user-name').forEach(el => {
+            el.textContent = user.nom;
+        });
+
+        document.querySelectorAll('.user-email').forEach(el => {
+            el.textContent = user.email;
+        });
+
+        document.querySelectorAll('.user-balance').forEach(el => {
+            el.textContent = parseFloat(user.solde).toFixed(2) + ' €';
+        });
+
+        // ✅ NOUVEAU : Mettre à jour la carte de crédit
+        updateCreditCard(user.nom, parseFloat(user.solde));
+        
+        // ✅ OPTIONNEL : Animation du solde
+        animateCreditCardBalance(parseFloat(user.solde), 1500);
+        
+        // ✅ OPTIONNEL : Couleur dynamique selon le solde
+        updateCreditCardColor(parseFloat(user.solde));
+
+    } catch (error) {
+        console.error('❌ Erreur:', error);
+    }
+}

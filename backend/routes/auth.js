@@ -9,72 +9,164 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // ========================================
-// 📝 ROUTE D'INSCRIPTION
+// 🔐 ROUTE D'INSCRIPTION COMPLÈTE
+// À REMPLACER dans backend/routes/auth.js
 // ========================================
+
 router.post('/register', async (req, res) => {
+  console.log('📝 POST /api/auth/register');
+  console.log('📦 Body:', JSON.stringify(req.body, null, 2));
+
   try {
-    console.log('📥 Données reçues:', req.body);
-    
-    // Récupérer les données du formulaire
-    const { nom, email, telephone, adresse, password } = req.body;
+    const {
+      // Infos personnelles
+      nom, prenom, dateNaissance, lieuNaissance, nationalite,
+      numeroSecuriteSociale, situationFamiliale,
+      // Coordonnées
+      numeroRue, nomRue, complementAdresse, ville, codePostal, pays,
+      telephoneFixe, telephoneMobile, email,
+      // Situation pro
+      statutProfessionnel, revenusMensuels, typeContrat,
+      // Sécurité
+      password
+    } = req.body;
 
-    // Vérifier que tous les champs sont présents
-    if (!nom || !email || !telephone || !adresse || !password) {
-      return res.status(400).json({ 
-        message: 'Tous les champs sont obligatoires' 
+    // ========================================
+    // ✅ VALIDATION CHAMPS OBLIGATOIRES
+    // ========================================
+    const required = [
+      'nom', 'prenom', 'dateNaissance', 'lieuNaissance', 'nationalite',
+      'situationFamiliale', 'numeroRue', 'nomRue', 'ville', 'codePostal',
+      'pays', 'telephoneMobile', 'email', 'statutProfessionnel',
+      'revenusMensuels', 'password'
+    ];
+
+    const missing = required.find(field => !req.body[field]);
+    if (missing) {
+      return res.status(400).json({
+        message: `Le champ "${missing}" est obligatoire`
       });
     }
 
-    // Validation de l'email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ 
-        message: 'Format d\'email invalide' 
-      });
+    // ========================================
+    // ✅ VALIDATION EMAIL
+    // ========================================
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ message: 'Email invalide' });
     }
 
-    // Validation du mot de passe (minimum 6 caractères)
-    if (password.length < 6) {
-      return res.status(400).json({ 
-        message: 'Le mot de passe doit contenir au moins 6 caractères' 
-      });
-    }
-
-    // Vérifier si l'email existe déjà
+    // Vérifier unicité
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ 
-        message: 'Cet email est déjà utilisé' 
+      return res.status(409).json({
+        message: 'Cet email est déjà utilisé'
       });
     }
 
-    // Hasher le mot de passe (10 rounds de salage)
+    // ========================================
+    // ✅ VALIDATION MOT DE PASSE
+    // ========================================
+    if (password.length < 8) {
+      return res.status(400).json({
+        message: 'Le mot de passe doit contenir au moins 8 caractères'
+      });
+    }
+
+    const hasUpper = /[A-Z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecial = /[^A-Za-z0-9]/.test(password);
+
+    if (!hasUpper || !hasLower || !hasNumber || !hasSpecial) {
+      return res.status(400).json({
+        message: 'Le mot de passe doit contenir 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial'
+      });
+    }
+
+    // ========================================
+    // ✅ VALIDATION ÂGE (18+)
+    // ========================================
+    const birthDate = new Date(dateNaissance);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    if (age < 18) {
+      return res.status(400).json({
+        message: 'Vous devez avoir au moins 18 ans'
+      });
+    }
+
+    // ========================================
+    // 🔒 HASHER MOT DE PASSE
+    // ========================================
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Créer l'utilisateur dans la base de données
+    // ========================================
+    // 💾 CRÉER L'UTILISATEUR
+    // ========================================
     const newUser = await User.create({
-      nom,
-      email,
-      telephone,
-      adresse,
+      // Infos personnelles
+      nom, prenom, dateNaissance, lieuNaissance, nationalite,
+      numeroSecuriteSociale: numeroSecuriteSociale || null,
+      situationFamiliale,
+      // Coordonnées
+      numeroRue, nomRue,
+      complementAdresse: complementAdresse || null,
+      ville, codePostal, pays,
+      telephoneFixe: telephoneFixe || null,
+      telephoneMobile, email,
+      // Situation pro
+      statutProfessionnel, revenusMensuels,
+      typeContrat: typeContrat || 'non_applicable',
+      // Sécurité
       password: hashedPassword,
-      solde: 0,
+      solde: 0.00,
       userType: 'client',
       isActive: true
     });
 
-    console.log('✅ Utilisateur créé:', newUser.email);
+    console.log('✅ Utilisateur créé:', newUser.id, '-', newUser.email);
 
-    // Réponse de succès
+    // ========================================
+    // 📧 RÉPONSE
+    // ========================================
     res.status(201).json({
-      message: 'Inscription réussie',
-      userId: newUser.id
+      message: 'Inscription réussie ! Vous pouvez maintenant vous connecter.',
+      user: {
+        id: newUser.id,
+        nom: newUser.nom,
+        prenom: newUser.prenom,
+        email: newUser.email,
+        createdAt: newUser.createdAt
+      }
     });
 
   } catch (error) {
     console.error('❌ Erreur inscription:', error);
-    res.status(500).json({ 
-      message: 'Erreur serveur lors de l\'inscription' 
+    
+    // Erreurs Sequelize
+    if (error.name === 'SequelizeValidationError') {
+      const errors = error.errors.map(e => e.message);
+      return res.status(400).json({
+        message: 'Erreur de validation',
+        errors
+      });
+    }
+    
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      return res.status(409).json({
+        message: 'Cette information est déjà utilisée (email ou n° sécu)'
+      });
+    }
+    
+    res.status(500).json({
+      message: 'Erreur serveur lors de l\'inscription',
+      error: error.message
     });
   }
 });

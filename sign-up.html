@@ -1,176 +1,784 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="PayOne HTML Template">
-    <meta name="keywords" content="PayOne HTML Template">
-    <meta name="robots" content="INDEX,FOLLOW">
+    <meta name="description" content="PayOne Banking - Inscription">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Title -->
     <title>Inscription - Payone Banking</title>
-    <!-- Favicon -->
-     <link rel="shortcut icon" href="assets/images/logo/favicon.png">
-    <!-- slider -->
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
-    <!-- magnfic popup -->
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <!-- aos animation -->
-    <link rel="stylesheet" href="assets/css/aos-animation.css">
-    <!-- Bootstrap -->
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <!-- Main css -->
     <link rel="stylesheet" href="assets/css/main.css">
+    
+    <style>
+        /* ========================================
+           STYLES POUR LE FORMULAIRE MULTI-ÉTAPES
+           ======================================== */
+        
+        /* Progression steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #e0e0e0;
+            z-index: 0;
+        }
+        
+        .step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #999;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .step.active .step-circle {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .step.completed .step-circle {
+            background: #28a745;
+            color: white;
+        }
+        
+        .step-label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        /* Form sections - IMPORTANT */
+        .form-step {
+            display: none !important;
+        }
+        
+        .form-step.active {
+            display: block !important;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Validation */
+        .form-control.is-invalid,
+        .form-select.is-invalid {
+            border-color: #dc3545 !important;
+        }
+        
+        .form-control.is-valid,
+        .form-select.is-valid {
+            border-color: #28a745 !important;
+        }
+        
+        .invalid-feedback {
+            display: none;
+            color: #dc3545;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        .form-control.is-invalid + .invalid-feedback,
+        .form-select.is-invalid + .invalid-feedback {
+            display: block;
+        }
+        
+        .required {
+            color: #dc3545;
+        }
+        
+        .btn-navigation {
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cursor-pointer {
+            cursor: pointer;
+        }
+    </style>
 </head> 
 <body class="position-relative">
     
-<!--==================== Preloader Start ====================-->
-  <div class="preloder">
-    <div class="position-relative tw-w-76-px tw-h-76-px d-flex justify-content-center align-items-center">
-      <img src="assets/images/icon/preloder-img1.png" alt="Img" class="tw-w-8">
-      <div class="preloder__exchange__img w-100 h-100">
-        <img src="assets/images/icon/preloder-img2.png" alt="Img" class="w-100 h-100 animation-rotation">
-      </div>
-    </div>
-  </div>
-<!--==================== Preloader End ====================-->
-
-<!--==================== Overlay Start ====================-->
-<div class="overlay"></div>
-<!--==================== Overlay End ====================-->
-
-<!--==================== Sidebar Overlay End ====================-->
-<div class="side-overlay"></div>
-<!--==================== Sidebar Overlay End ====================-->
-
-<!-- Custom Toast Message start -->
-<div id="toast-container"></div>
-<!-- Custom Toast Message End -->
-
-<!-- ==================== Scroll to Top End Here ==================== -->
-<div class="progress-wrap cursor-big">
-  <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-  </svg>
-</div>
-<!-- ==================== Scroll to Top End Here ==================== -->
-
-<!-- Custom Cursor Start -->
-  <div class="cursor"></div>
-  <span class="dot"></span>
-<!-- Custom Cursor End -->
-
-<section class="position-relative">
-   
-    <div class="d-flex">
-        <div class="flex-grow-1">
-            <div class="max-w-526-px w-100 log-in-card tw-px-6 tw-py-12 mx-auto">
-                 <a href="index.html" class="tw-mb-188-px">
-                    <img src="assets/images/logo/logo2.png" alt="Image" class="">
-                </a>
-                <h4 class="fw-medium text-primary-50 tw-mb-8">Créer votre compte PayOne</h4>
-                
-                <!-- ============= FORMULAIRE D'INSCRIPTION ============= -->
-                <form id="signup-form">
-                    
-                    <div class="tw-mb-6 flex-wrap border-before position-relative text-center z-1">
-                        <span class="fw-normal text-dark-500 tw-text-4 bg-white tw-px-4">Inscription</span>
-                        <span class="position-absolute w-100 border-bottom border-neutral-50 tw-start-0 top-50 translate-middle-y z-n1"></span>
-                    </div>
-                    
-                    <!-- Nom complet -->
-                    <div class="tw-mb-6">
-                        <label for="nom" class="fw-semibold tw-text-4 text-primary-50 tw-mb-3">Nom complet*</label>
-                        <input type="text" id="nom" name="nom" placeholder="Votre nom complet" class="fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3 w-100 focus-visible-border-main-600" required>
-                    </div>
-                    
-                    <!-- Email -->
-                    <div class="tw-mb-6">
-                        <label for="email" class="fw-semibold tw-text-4 text-primary-50 tw-mb-3">Email*</label>
-                        <input type="email" id="email" name="email" placeholder="votre@email.com" class="fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3 w-100 focus-visible-border-main-600" required>
-                    </div>
-                    
-                    <!-- Téléphone -->
-                    <div class="tw-mb-6">
-                        <label for="telephone" class="fw-semibold tw-text-4 text-primary-50 tw-mb-3">Téléphone*</label>
-                        <input type="tel" id="telephone" name="telephone" placeholder="0612345678" class="fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3 w-100 focus-visible-border-main-600" required>
-                    </div>
-                    
-                    <!-- Adresse -->
-                    <div class="tw-mb-6">
-                        <label for="adresse" class="fw-semibold tw-text-4 text-primary-50 tw-mb-3">Adresse complète*</label>
-                        <input type="text" id="adresse" name="adresse" placeholder="123 Rue de la Paix, Paris" class="fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3 w-100 focus-visible-border-main-600" required>
-                    </div>
-                    
-                    <!-- Mot de passe -->
-                    <div class="tw-mb-3">
-                        <label for="password" class="fw-semibold tw-text-4 text-primary-50 tw-mb-3">Mot de passe*</label>
-                        <div class="position-relative">
-                            <input type="password" class="form-control border-neutral-05 border rounded-3 w-100 focus-visible-border-main-600 fw-semibold text-dark-500 tw-px-4 tw-py-3 tw-rounded-lg shadow-none" id="password" name="password" placeholder="Au moins 6 caractères" required>
-                            <span class="toggle-password position-absolute top-50 tw-end-0 tw-me-4 tw-text-xl text-neutral-600 tw--translate-y-50 ph-bold ph-eye-slash" id="#password"></span>
-                        </div>
-                    </div>
-                    
-                    <!-- Conditions -->
-                    <div class="d-flex align-items-center justify-content-between tw-gap-3 flex-wrap tw-mb-8">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="terms" required>
-                            <label class="form-check-label fw-semibold" for="terms">
-                                J'accepte les conditions d'utilisation
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <!-- Bouton d'inscription -->
-                    <button type="submit" class="text-white bg-base-two-600 w-100 tw-py-3 rounded-3 text-center tw-mb-3">S'inscrire</button>
-                    
-                    <!-- Lien vers connexion -->
-                    <span class="fw-semibold tw-text-4 text-primary-50 text-center justify-content-center d-flex">
-                        Vous avez déjà un compte ? 
-                        <a href="log-in.html" class="fw-semibold text-primary-600"> Se connecter</a>
-                    </span>
-                </form>
+    <!--==================== Preloader Start ====================-->
+    <div class="preloder">
+        <div class="position-relative tw-w-76-px tw-h-76-px d-flex justify-content-center align-items-center">
+            <img src="assets/images/icon/preloder-img1.png" alt="Img" class="tw-w-8">
+            <div class="preloder__exchange__img w-100 h-100">
+                <img src="assets/images/icon/preloder-img2.png" alt="Img" class="w-100 h-100 animation-rotation">
             </div>
         </div>
-        <div class="w-50 d-lg-block d-none ">
-            <img src="assets/images/thumbs/sign-up-img1.png" alt="Image" class="w-100 h-100 object-fit-cover">
-        </div>
     </div>
-</section>
+    <!--==================== Preloader End ====================-->
 
-    <!-- Jquery js -->
+    <div class="overlay"></div>
+
+    <section class="position-relative">
+        <div class="d-flex">
+            <div class="flex-grow-1">
+                <div class="max-w-700-px w-100 log-in-card tw-px-6 tw-py-12 mx-auto">
+                    <a href="index.html" class="tw-mb-12 d-inline-block">
+                        <img src="assets/images/logo/logo2.png" alt="PayOne">
+                    </a>
+                    <h4 class="fw-medium text-primary-50 tw-mb-3">Créer votre compte PayOne</h4>
+                    <p class="text-dark-500 tw-mb-8">Remplissez vos informations en 4 étapes</p>
+                    
+                    <!-- Progress Steps -->
+                    <div class="progress-steps tw-mb-10">
+                        <div class="step active" data-step="1">
+                            <div class="step-circle">1</div>
+                            <span class="step-label">Infos<br>personnelles</span>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-circle">2</div>
+                            <span class="step-label">Coordonnées</span>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-circle">3</div>
+                            <span class="step-label">Situation<br>pro</span>
+                        </div>
+                        <div class="step" data-step="4">
+                            <div class="step-circle">4</div>
+                            <span class="step-label">Sécurité</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Formulaire -->
+                    <form id="signup-form" novalidate>
+                        
+                        <!-- ÉTAPE 1 -->
+                        <div class="form-step active" data-step="1">
+                            <h5 class="fw-semibold text-primary-50 tw-mb-6">📋 Informations personnelles</h5>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Nom <span class="required">*</span></label>
+                                    <input type="text" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="nom" name="nom" placeholder="Dupont" required>
+                                    <div class="invalid-feedback">Le nom est obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Prénom(s) <span class="required">*</span></label>
+                                    <input type="text" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="prenom" name="prenom" placeholder="Jean" required>
+                                    <div class="invalid-feedback">Le prénom est obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Date de naissance <span class="required">*</span></label>
+                                    <input type="date" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="dateNaissance" name="dateNaissance" required>
+                                    <div class="invalid-feedback">Vous devez avoir au moins 18 ans</div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Lieu de naissance <span class="required">*</span></label>
+                                    <input type="text" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="lieuNaissance" name="lieuNaissance" placeholder="Paris, France" required>
+                                    <div class="invalid-feedback">Le lieu de naissance est obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Nationalité <span class="required">*</span></label>
+                                    <input type="text" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="nationalite" name="nationalite" placeholder="Française" required>
+                                    <div class="invalid-feedback">La nationalité est obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">N° Sécurité sociale</label>
+                                    <input type="text" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="numeroSecuriteSociale" name="numeroSecuriteSociale" placeholder="Facultatif">
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Situation familiale <span class="required">*</span></label>
+                                    <select class="form-select fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="situationFamiliale" name="situationFamiliale" required>
+                                        <option value="">Sélectionnez...</option>
+                                        <option value="celibataire">Célibataire</option>
+                                        <option value="marie">Marié(e)</option>
+                                        <option value="divorce">Divorcé(e)</option>
+                                        <option value="veuf">Veuf/Veuve</option>
+                                        <option value="pacse">Pacsé(e)</option>
+                                        <option value="union_libre">Union libre</option>
+                                    </select>
+                                    <div class="invalid-feedback">La situation familiale est obligatoire</div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-end tw-mt-8">
+                                <button type="button" class="btn btn-navigation text-white bg-base-two-600" onclick="nextStep()">Suivant →</button>
+                            </div>
+                        </div>
+                        
+                        <!-- ÉTAPE 2 -->
+                        <div class="form-step" data-step="2">
+                            <h5 class="fw-semibold text-primary-50 tw-mb-6">📍 Coordonnées</h5>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">N° rue <span class="required">*</span></label>
+                                    <input type="text" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="numeroRue" name="numeroRue" placeholder="15" required>
+                                    <div class="invalid-feedback">Obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-9">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Nom de rue <span class="required">*</span></label>
+                                    <input type="text" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="nomRue" name="nomRue" placeholder="Rue de la République" required>
+                                    <div class="invalid-feedback">Obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Complément</label>
+                                    <input type="text" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="complementAdresse" name="complementAdresse" placeholder="Bât. A, Apt. 12 (Facultatif)">
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Code postal <span class="required">*</span></label>
+                                    <input type="text" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="codePostal" name="codePostal" placeholder="75001" required>
+                                    <div class="invalid-feedback">Obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Ville <span class="required">*</span></label>
+                                    <input type="text" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="ville" name="ville" placeholder="Paris" required>
+                                    <div class="invalid-feedback">Obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Pays <span class="required">*</span></label>
+                                    <select class="form-select fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="pays" name="pays" required>
+                                        <option value="">Sélectionnez...</option>
+                                    </select>
+                                    <div class="invalid-feedback">Obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Tél. fixe</label>
+                                    <input type="tel" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="telephoneFixe" name="telephoneFixe" placeholder="+33 1 23 45 67 89">
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Tél. mobile <span class="required">*</span></label>
+                                    <input type="tel" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="telephoneMobile" name="telephoneMobile" placeholder="+33 6 12 34 56 78" required>
+                                    <div class="invalid-feedback">Obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Email <span class="required">*</span></label>
+                                    <input type="email" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="email" name="email" placeholder="votre.email@exemple.com" required>
+                                    <div class="invalid-feedback">Email invalide</div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between tw-mt-8">
+                                <button type="button" class="btn btn-navigation bg-neutral-10 text-dark-600" onclick="prevStep()">← Précédent</button>
+                                <button type="button" class="btn btn-navigation text-white bg-base-two-600" onclick="nextStep()">Suivant →</button>
+                            </div>
+                        </div>
+                        
+                        <!-- ÉTAPE 3 -->
+                        <div class="form-step" data-step="3">
+                            <h5 class="fw-semibold text-primary-50 tw-mb-6">💼 Situation professionnelle</h5>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Statut <span class="required">*</span></label>
+                                    <select class="form-select fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="statutProfessionnel" name="statutProfessionnel" required>
+                                        <option value="">Sélectionnez...</option>
+                                        <option value="salarie">Salarié(e)</option>
+                                        <option value="independant">Indépendant</option>
+                                        <option value="retraite">Retraité(e)</option>
+                                        <option value="etudiant">Étudiant(e)</option>
+                                        <option value="chomeur">Sans emploi</option>
+                                        <option value="autre">Autre</option>
+                                    </select>
+                                    <div class="invalid-feedback">Obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Revenus mensuels <span class="required">*</span></label>
+                                    <select class="form-select fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="revenusMensuels" name="revenusMensuels" required>
+                                        <option value="">Sélectionnez...</option>
+                                        <option value="0-500">Moins de 500 €</option>
+                                        <option value="500-1000">500 - 1 000 €</option>
+                                        <option value="1000-1500">1 000 - 1 500 €</option>
+                                        <option value="1500-2500">1 500 - 2 500 €</option>
+                                        <option value="2500-3500">2 500 - 3 500 €</option>
+                                        <option value="3500-5000">3 500 - 5 000 €</option>
+                                        <option value="5000-7000">5 000 - 7 000 €</option>
+                                        <option value="7000-10000">7 000 - 10 000 €</option>
+                                        <option value="10000-15000">10 000 - 15 000 €</option>
+                                        <option value="15000-20000">15 000 - 20 000 €</option>
+                                        <option value="20000-30000">20 000 - 30 000 €</option>
+                                        <option value="30000+">Plus de 30 000 €</option>
+                                    </select>
+                                    <div class="invalid-feedback">Obligatoire</div>
+                                </div>
+                                
+                                <div class="col-md-6" id="typeContratGroup" style="display: none;">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Type de contrat</label>
+                                    <select class="form-select fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="typeContrat" name="typeContrat">
+                                        <option value="non_applicable">Non applicable</option>
+                                        <option value="cdi">CDI</option>
+                                        <option value="cdd">CDD</option>
+                                        <option value="interim">Intérim</option>
+                                        <option value="stage">Stage</option>
+                                        <option value="apprentissage">Apprentissage</option>
+                                        <option value="freelance">Freelance</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between tw-mt-8">
+                                <button type="button" class="btn btn-navigation bg-neutral-10 text-dark-600" onclick="prevStep()">← Précédent</button>
+                                <button type="button" class="btn btn-navigation text-white bg-base-two-600" onclick="nextStep()">Suivant →</button>
+                            </div>
+                        </div>
+                        
+                        <!-- ÉTAPE 4 -->
+                        <div class="form-step" data-step="4">
+                            <h5 class="fw-semibold text-primary-50 tw-mb-6">🔐 Sécurité</h5>
+                            
+                            <div class="alert" style="background: #e7f1ff; border-left: 4px solid #667eea; margin-bottom: 20px;">
+                                <strong class="text-dark-600">ℹ️ Critères du mot de passe :</strong>
+                                <ul class="mb-0 mt-2 text-dark-500" style="font-size: 14px;">
+                                    <li>Au moins 8 caractères</li>
+                                    <li>1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Mot de passe <span class="required">*</span></label>
+                                    <div class="position-relative">
+                                        <input type="password" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="password" name="password" required>
+                                        <span class="cursor-pointer position-absolute top-50 tw-end-0 tw-me-4 tw-text-xl text-neutral-600 translate-middle-y ph-bold ph-eye-slash" onclick="togglePassword('password', this)"></span>
+                                    </div>
+                                    <div class="invalid-feedback">Mot de passe trop faible</div>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <label class="fw-semibold tw-text-4 text-primary-50 tw-mb-2">Confirmer <span class="required">*</span></label>
+                                    <div class="position-relative">
+                                        <input type="password" class="form-control fw-semibold tw-text-4 text-dark-500 tw-px-4 tw-py-3 border-neutral-05 border rounded-3" id="confirmPassword" name="confirmPassword" required>
+                                        <span class="cursor-pointer position-absolute top-50 tw-end-0 tw-me-4 tw-text-xl text-neutral-600 translate-middle-y ph-bold ph-eye-slash" onclick="togglePassword('confirmPassword', this)"></span>
+                                    </div>
+                                    <div class="invalid-feedback">Les mots de passe ne correspondent pas</div>
+                                </div>
+                                
+                                <div class="col-md-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="acceptTerms" required>
+                                        <label class="form-check-label fw-semibold text-dark-500" for="acceptTerms">
+                                            J'accepte les conditions générales <span class="required">*</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between tw-mt-8">
+                                <button type="button" class="btn btn-navigation bg-neutral-10 text-dark-600" onclick="prevStep()">← Précédent</button>
+                                <button type="submit" class="btn btn-navigation text-white bg-base-two-600" id="submitBtn">
+                                    <span id="submitText">Créer mon compte ✓</span>
+                                    <span id="submitSpinner" style="display: none;">
+                                        <span class="spinner-border spinner-border-sm me-2"></span>
+                                        Création...
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </form>
+                    
+                    <!-- Lien connexion -->
+                    <div class="text-center tw-mt-6">
+                        <span class="fw-semibold tw-text-4 text-primary-50">
+                            Vous avez déjà un compte ? 
+                            <a href="log-in.html" class="fw-semibold text-primary-600">Se connecter</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="w-50 d-lg-block d-none">
+                <img src="assets/images/thumbs/sign-up-img1.png" alt="Image" class="w-100 h-100 object-fit-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
     <script src="assets/js/jquery-3.7.1.min.js"></script>
-    <!-- phosphor Js -->
     <script src="assets/js/phosphor-icon.js"></script>
-    <!-- Bootstrap Bundle Js -->
     <script src="assets/js/boostrap.bundle.min.js"></script>
-
-    <!-- GSAP js -->
-    <script src="assets/js/gsap.min.js"></script>
-    <!-- SplitText -->
-    <script src="assets/js/SplitText.min.js"></script>
-    <!-- Scroll Trigger -->
-    <script src="assets/js/swiper-bundle.min.js"></script>
-    <!-- marquee js -->
-    <script src="assets/js/marquee-main.js"></script>
-    <!-- swper slider -->
-    <script src="assets/js/ScrollTrigger.min.js"></script>
-    <!-- ScrollSmoother -->
-    <script src="assets/js/ScrollSmoother.min.js"></script>
-    <!-- aos animation -->
-    <script src="assets/js/aos-animation.js"></script>
-    <!-- counter up -->
-    <script src="assets/js/counter-up.main.js"></script>
-    <!-- custom GSAP -->
-    <script src="assets/js/custom-gsap.js"></script>
-    <!-- magnific popup -->
-    <script src="assets/js/magific-popup.js"></script>
-
-    <!-- main js -->
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/countries.js"></script>
     
-    <!-- ============= SCRIPT D'AUTHENTIFICATION ============= -->
-    <script src="assets/js/auth.js"></script>
+    <script>
+    // ========================================
+    // 📝 JAVASCRIPT INLINE POUR LE FORMULAIRE
+    // ========================================
+    
+    let currentStep = 1;
+    const totalSteps = 4;
+    
+    // ========================================
+    // 🚀 INITIALISATION
+    // ========================================
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('📝 Init formulaire inscription');
+        
+        loadCountries();
+        setupValidation();
+        setupConditionalFields();
+        setupFormSubmission();
+        
+        // Vérifier que l'étape 1 est visible
+        console.log('Étape 1 visible:', document.querySelector('[data-step="1"]').classList.contains('active'));
+    });
+    
+    // ========================================
+    // 🌍 CHARGER LES PAYS
+    // ========================================
+    function loadCountries() {
+        const select = document.getElementById('pays');
+        if (!select) return;
+        
+        if (typeof countries === 'undefined') {
+            console.error('❌ countries.js non chargé');
+            return;
+        }
+        
+        select.innerHTML = '<option value="">Sélectionnez...</option>';
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country;
+            option.textContent = country;
+            if (country === 'France') option.selected = true;
+            select.appendChild(option);
+        });
+        
+        console.log('✅ Pays chargés:', countries.length);
+    }
+    
+    // ========================================
+    // 🎯 NAVIGATION
+    // ========================================
+    function nextStep() {
+        console.log('▶️ nextStep() - Étape actuelle:', currentStep);
+        
+        if (!validateStep(currentStep)) {
+            console.log('❌ Validation échouée pour étape', currentStep);
+            return;
+        }
+        
+        if (currentStep < totalSteps) {
+            currentStep++;
+            showStep(currentStep);
+            console.log('✅ Passage à l\'étape', currentStep);
+        }
+    }
+    
+    function prevStep() {
+        console.log('◀️ prevStep() - Étape actuelle:', currentStep);
+        
+        if (currentStep > 1) {
+            currentStep--;
+            showStep(currentStep);
+            console.log('✅ Retour à l\'étape', currentStep);
+        }
+    }
+    
+    function showStep(step) {
+        console.log('📄 showStep(' + step + ')');
+        
+        // Cacher toutes les étapes
+        document.querySelectorAll('.form-step').forEach(s => {
+            s.classList.remove('active');
+        });
+        
+        // Afficher l'étape demandée
+        const stepElement = document.querySelector('.form-step[data-step="' + step + '"]');
+        if (stepElement) {
+            stepElement.classList.add('active');
+            console.log('✅ Étape ' + step + ' affichée');
+        } else {
+            console.error('❌ Étape ' + step + ' introuvable');
+        }
+        
+        // Mettre à jour l'indicateur
+        document.querySelectorAll('.step').forEach((el, index) => {
+            el.classList.remove('active', 'completed');
+            if (index + 1 === step) {
+                el.classList.add('active');
+            } else if (index + 1 < step) {
+                el.classList.add('completed');
+            }
+        });
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // ========================================
+    // ✅ VALIDATION
+    // ========================================
+    function validateStep(step) {
+        const stepElement = document.querySelector('.form-step[data-step="' + step + '"]');
+        const inputs = stepElement.querySelectorAll('input[required], select[required]');
+        
+        let valid = true;
+        inputs.forEach(input => {
+            if (!validateField(input)) {
+                valid = false;
+            }
+        });
+        
+        return valid;
+    }
+    
+    function validateField(field) {
+        const value = field.value.trim();
+        const name = field.name;
+        let isValid = true;
+        let message = '';
+        
+        if (field.hasAttribute('required') && !value) {
+            isValid = false;
+            message = 'Ce champ est obligatoire';
+        }
+        else if (name === 'email' && value) {
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                isValid = false;
+                message = 'Email invalide';
+            }
+        }
+        else if (name === 'dateNaissance' && value) {
+            const birthDate = new Date(value);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            if (age < 18) {
+                isValid = false;
+                message = 'Vous devez avoir au moins 18 ans';
+            }
+        }
+        else if ((name === 'telephoneMobile' || name === 'telephoneFixe') && value) {
+            const cleaned = value.replace(/[\s\-\(\)\.]/g, '');
+            if (cleaned.length < 10) {
+                isValid = false;
+                message = 'Numéro invalide';
+            }
+        }
+        else if (name === 'password' && value) {
+            if (value.length < 8) {
+                isValid = false;
+                message = 'Au moins 8 caractères';
+            } else if (!/[A-Z]/.test(value)) {
+                isValid = false;
+                message = 'Au moins 1 majuscule';
+            } else if (!/[a-z]/.test(value)) {
+                isValid = false;
+                message = 'Au moins 1 minuscule';
+            } else if (!/[0-9]/.test(value)) {
+                isValid = false;
+                message = 'Au moins 1 chiffre';
+            } else if (!/[^A-Za-z0-9]/.test(value)) {
+                isValid = false;
+                message = 'Au moins 1 caractère spécial';
+            }
+        }
+        else if (name === 'confirmPassword' && value) {
+            const password = document.getElementById('password').value;
+            if (value !== password) {
+                isValid = false;
+                message = 'Les mots de passe ne correspondent pas';
+            }
+        }
+        
+        if (!isValid) {
+            field.classList.add('is-invalid');
+            field.classList.remove('is-valid');
+            const feedback = field.nextElementSibling;
+            if (feedback && feedback.classList.contains('invalid-feedback')) {
+                feedback.textContent = message;
+            }
+        } else {
+            field.classList.remove('is-invalid');
+            if (value) field.classList.add('is-valid');
+        }
+        
+        return isValid;
+    }
+    
+    function setupValidation() {
+        const form = document.getElementById('signup-form');
+        
+        form.querySelectorAll('input, select').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (this.value) validateField(this);
+            });
+            
+            field.addEventListener('input', function() {
+                if (this.classList.contains('is-invalid')) {
+                    validateField(this);
+                }
+            });
+        });
+    }
+    
+    // ========================================
+    // 🔄 CHAMPS CONDITIONNELS
+    // ========================================
+    function setupConditionalFields() {
+        const statut = document.getElementById('statutProfessionnel');
+        const typeContratGroup = document.getElementById('typeContratGroup');
+        const typeContrat = document.getElementById('typeContrat');
+        
+        if (statut && typeContratGroup) {
+            statut.addEventListener('change', function() {
+                if (this.value === 'salarie') {
+                    typeContratGroup.style.display = 'block';
+                    typeContrat.required = true;
+                } else {
+                    typeContratGroup.style.display = 'none';
+                    typeContrat.required = false;
+                    typeContrat.value = 'non_applicable';
+                }
+            });
+        }
+    }
+    
+    // ========================================
+    // 👁️ TOGGLE PASSWORD
+    // ========================================
+    function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('ph-eye-slash');
+            icon.classList.add('ph-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('ph-eye');
+            icon.classList.add('ph-eye-slash');
+        }
+    }
+    
+    // ========================================
+    // 📤 SOUMISSION
+    // ========================================
+    function setupFormSubmission() {
+        const form = document.getElementById('signup-form');
+        
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            console.log('📤 Soumission...');
+            
+            const terms = document.getElementById('acceptTerms');
+            if (!terms.checked) {
+                alert('❌ Vous devez accepter les conditions');
+                return;
+            }
+            
+            if (!validateStep(currentStep)) {
+                alert('❌ Veuillez corriger les erreurs');
+                return;
+            }
+            
+            const formData = new FormData(form);
+            const data = {};
+            
+            formData.forEach((value, key) => {
+                if (key !== 'confirmPassword') {
+                    data[key] = value;
+                }
+            });
+            
+            console.log('📦 Données:', data);
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitSpinner = document.getElementById('submitSpinner');
+            
+            submitBtn.disabled = true;
+            submitText.style.display = 'none';
+            submitSpinner.style.display = 'inline-block';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    console.log('✅ Inscription réussie');
+                    alert('✅ ' + result.message + '\n\nRedirection vers la connexion...');
+                    
+                    setTimeout(() => {
+                        window.location.href = '/log-in.html';
+                    }, 1500);
+                } else {
+                    console.error('❌ Erreur:', result.message);
+                    alert('❌ ' + result.message);
+                    
+                    submitBtn.disabled = false;
+                    submitText.style.display = 'inline-block';
+                    submitSpinner.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('❌ Erreur réseau:', error);
+                alert('❌ Erreur de connexion au serveur');
+                
+                submitBtn.disabled = false;
+                submitText.style.display = 'inline-block';
+                submitSpinner.style.display = 'none';
+            }
+        });
+    }
+    
+    console.log('✅ Script chargé');
+    </script>
 
 </body>
 </html>
