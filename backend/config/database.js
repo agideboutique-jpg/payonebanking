@@ -1,26 +1,58 @@
 // ========================================
 // CONFIGURATION DE LA CONNEXION À MYSQL
+// Compatible avec Railway
 // ========================================
-
-console.log("ENV DB_HOST =", process.env.DB_HOST);
-console.log("ENV DB_PORT =", process.env.DB_PORT);
-console.log("ENV DB_NAME =", process.env.DB_NAME);
-console.log("ENV MYSQL_URL =", process.env.MYSQL_URL);
-console.log("ENV DATABASE_URL =", process.env.DATABASE_URL);
 
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Création de l'instance Sequelize pour se connecter à MySQL
+// 🔍 DIAGNOSTIC - Afficher toutes les variables Railway
+console.log('\n🔍 DIAGNOSTIC DES VARIABLES D\'ENVIRONNEMENT:');
+console.log('================================================');
+
+// Variables Railway MySQL (automatiques)
+console.log('MYSQLHOST =', process.env.MYSQLHOST);
+console.log('MYSQLPORT =', process.env.MYSQLPORT);
+console.log('MYSQLDATABASE =', process.env.MYSQLDATABASE);
+console.log('MYSQLUSER =', process.env.MYSQLUSER);
+console.log('MYSQLPASSWORD =', process.env.MYSQLPASSWORD ? '***' : 'undefined');
+console.log('MYSQL_URL =', process.env.MYSQL_URL ? 'défini' : 'undefined');
+
+// Variables personnalisées (si configurées)
+console.log('DB_HOST =', process.env.DB_HOST);
+console.log('DB_PORT =', process.env.DB_PORT);
+console.log('DB_NAME =', process.env.DB_NAME);
+console.log('DB_USER =', process.env.DB_USER);
+console.log('DB_PASSWORD =', process.env.DB_PASSWORD ? '***' : 'undefined');
+console.log('================================================\n');
+
+// 🎯 STRATÉGIE : Utiliser Railway variables OU variables personnalisées
+const dbConfig = {
+  host: process.env.DB_HOST || process.env.MYSQLHOST || 'localhost',
+  port: process.env.DB_PORT || process.env.MYSQLPORT || 3306,
+  database: process.env.DB_NAME || process.env.MYSQLDATABASE || 'payonebank',
+  username: process.env.DB_USER || process.env.MYSQLUSER || 'root',
+  password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD || ''
+};
+
+console.log('📊 CONFIGURATION FINALE:');
+console.log('Host:', dbConfig.host);
+console.log('Port:', dbConfig.port);
+console.log('Database:', dbConfig.database);
+console.log('User:', dbConfig.username);
+console.log('Password:', dbConfig.password ? '***' : 'vide');
+console.log('\n');
+
+// Création de l'instance Sequelize
 const sequelize = new Sequelize(
-  process.env.DB_NAME,      // Nom de la base : payonebank
-  process.env.DB_USER,      // Utilisateur : root
-  process.env.DB_PASSWORD,  // Mot de passe : (vide)
+  dbConfig.database,
+  dbConfig.username,
+  dbConfig.password,
   {
-    host: process.env.DB_HOST,     // localhost
-    port: process.env.DB_PORT || 3306,     // 3306
-    dialect: 'mysql',              // On utilise MySQL
-    logging: console.log,                // Mettre true pour voir les requêtes SQL
+    host: dbConfig.host,
+    port: dbConfig.port,
+    dialect: 'mysql',
+    logging: false, // Mettre true pour voir les requêtes SQL
     
     // Configuration du pool de connexions
     pool: {
